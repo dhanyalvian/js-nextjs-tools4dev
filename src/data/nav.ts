@@ -13,6 +13,10 @@ import {
   KeySquare,
   GlobeLock,
   Barcode,
+  ArrowLeftRight,
+  CalendarDays,
+  Recycle,
+  Ruler,
 } from "lucide-react";
 
 export const dataNav = {
@@ -29,9 +33,31 @@ export const dataNav = {
       demo: true,
     },
     {
+      title: "Converters",
+      url: "#",
+      icon: ArrowLeftRight,
+      submenus: [
+        {
+          title: "Number",
+          url: "/converters/number",
+          icon: Binary,
+        },
+        {
+          title: "Unit",
+          url: "/converters/unit",
+          icon: Ruler,
+        },
+        {
+          title: "Date",
+          url: "/converters/date",
+          icon: CalendarDays,
+        },
+      ],
+    },
+    {
       title: "Encoders / Decoders",
       url: "#",
-      icon: Binary,
+      icon: Recycle,
       submenus: [
         {
           title: "HTML",
@@ -76,6 +102,7 @@ export const dataNav = {
           title: "UUID",
           url: "/generators/uuid",
           icon: GlobeLock,
+          demo: true,
         },
         {
           title: "NanoID",
