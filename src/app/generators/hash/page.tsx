@@ -3,11 +3,16 @@
 "use client"
 
 import { AppHeader, AppMain } from "@/components/core/app-layout"
-import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from "@/components/ui/input-group"
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupButton,
+  InputGroupInput,
+} from "@/components/ui/input-group"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
-import { ClipboardPaste, Copy, Check } from "lucide-react"
+import { Copy, Check } from "lucide-react"
 import { useState } from "react"
 import * as crypto from "crypto"
 import { Switch } from "@/components/ui/switch"
@@ -132,6 +137,8 @@ const GeneratorHashPage = () => {
   }
 
   const handleCopyToClipboard = (key: keyof copyResult, value: string) => {
+    if (value === "") return
+
     CopyToClipboard(value)
     setIsCopied({
       ...isCopied,
@@ -164,21 +171,13 @@ const GeneratorHashPage = () => {
                 <Label htmlFor="input-text" className="text-foreground">
                   Input Text
                 </Label>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <InputGroupButton
-                      variant="ghost"
-                      aria-label="Help"
-                      className="ml-auto rounded-full"
-                      size="icon-xs"
-                    >
-                      <ClipboardPaste />
-                    </InputGroupButton>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Paste here</p>
-                  </TooltipContent>
-                </Tooltip>
+                <InputGroupButton
+                  variant="ghost"
+                  aria-label="Help"
+                  className="ml-auto rounded-full"
+                  size="icon-xs"
+                >
+                </InputGroupButton>
               </InputGroupAddon>
             </InputGroup>
           </div>
