@@ -1,8 +1,9 @@
 //- src/components/page/form.tsx
 
+import { X } from "lucide-react"
 import { Button } from "../ui/button"
 import { Input } from "../ui/input"
-import { InputGroup } from "../ui/input-group"
+import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupTextarea } from "../ui/input-group"
 import { Label } from "../ui/label"
 import { Switch } from "../ui/switch"
 
@@ -59,7 +60,6 @@ export const FormInputNumber = ({ id, label, value, min, max, isDisabled, onValu
             type="number"
             min={min}
             max={max}
-            // placeholder={min.toString()}
             value={value}
             className="h-8 w-17 shadow-none"
             disabled={isDisabled}
@@ -71,24 +71,66 @@ export const FormInputNumber = ({ id, label, value, min, max, isDisabled, onValu
   )
 }
 
-interface FormButtonSubmitProps {
+interface FormInputSubmitProps {
   id: string,
   label: string,
   disabled: boolean,
 }
-export const FormButtonSubmit = ({ id, label, disabled }: FormButtonSubmitProps) => {
+export const FormInputSubmit = ({ id, label, disabled }: FormInputSubmitProps) => {
   return (
     <div>
       <Button
         id={id}
         variant="default"
-        size="lg"
-        className="rounded-sm shadow-xs"
+        size="default"
+        className="rounded-md shadow-xs"
         disabled={disabled}
         type="submit"
       >
         {label}
       </Button>
+    </div>
+  )
+}
+
+interface FormInputTextareaResultProps {
+  label: string,
+  result: string[],
+  setResult: React.Dispatch<React.SetStateAction<string[]>>,
+}
+export const FormInputTextareaResult = ({
+  label,
+  result,
+  setResult,
+}: FormInputTextareaResultProps) => {
+  return (
+    <div className="grid w-full gap-4 bg-background">
+      <InputGroup>
+        <InputGroupTextarea
+          id="input-text"
+          value={result.join("\n")}
+          className="text-muted-foreground font-mono"
+          readOnly
+        />
+
+        <InputGroupAddon align="block-start">
+          <Label htmlFor="input-text" className="text-foreground">
+            {label}
+          </Label>
+
+          <InputGroupButton
+            variant="ghost"
+            aria-label="Help"
+            className="ml-auto rounded-full"
+            size="icon-xs"
+            onClick={() => setResult([])}
+          >
+            {result.length > 0 && (
+              <X />
+            )}
+          </InputGroupButton>
+        </InputGroupAddon>
+      </InputGroup>
     </div>
   )
 }
