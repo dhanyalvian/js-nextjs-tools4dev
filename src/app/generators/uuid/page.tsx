@@ -3,9 +3,7 @@
 "use client"
 
 import { AppHeader, AppMain } from "@/components/core/app-layout"
-import { Button } from "@/components/ui/button"
-import { ButtonGroup } from "@/components/ui/button-group"
-import { Input } from "@/components/ui/input"
+import { Form2Column, FormButtonSubmit, FormInputNumber, FormSwitch } from "@/components/page/form"
 import {
   InputGroup,
   InputGroupAddon,
@@ -14,8 +12,6 @@ import {
 } from "@/components/ui/input-group"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
-import { Spinner } from "@/components/ui/spinner"
-import { Switch } from "@/components/ui/switch"
 import { X } from "lucide-react"
 import { useState } from "react"
 import { v4 as uuidv4 } from 'uuid'
@@ -69,77 +65,43 @@ const GeneratorUuidPage = () => {
       <AppHeader breadcrumbItems={breadcrumbItems} />
 
       <AppMain>
-        <div className="flex flex-1 flex-col gap-4 pt-0">
-          <div className="bg-background">
-            <InputGroup className="px-3 py-6 flex justify-between items-center gap-2">
-              <Label htmlFor="uppercase" className="text-foreground">
-                Uppercase
-              </Label>
-              <div className="flex items-center gap-2">
-                <span className="font-normal text-sm">
-                  {isUppercase ? "On" : "Off"}
-                </span>
-                <Switch
-                  id="uppercase"
-                  checked={isUppercase}
-                  onCheckedChange={(checked) => handleUppercaseChange(checked)}
-                />
-              </div>
-            </InputGroup>
-          </div>
-
-          <div className="bg-background">
-            <InputGroup className="px-3 py-6 flex justify-between items-center gap-2">
-              <Label htmlFor="uppercase" className="text-foreground">
-                Number of UUIDs
-              </Label>
-
-              <div className="flex items-center gap-2">
-                <form onSubmit={handleGenerateSubmit}>
-                  <ButtonGroup>
-                    <Input
-                      type="number"
-                      min="1"
-                      max="50"
-                      placeholder="1"
-                      value={count}
-                      className="h-8 w-17 shadow-none"
-                      disabled={isGenerate}
-                      onChange={(e) => handleCountChange(Number(e.target.value))}
-                    />
-                    <Button
-                      variant="default"
-                      size="sm"
-                      className="h-8 shadow-none"
-                      disabled={isGenerate}
-                      type="submit"
-                    >
-                      {isGenerate
-                        ? <><Spinner /> Generating...</>
-                        : "Generate"
-                      }
-                    </Button>
-                  </ButtonGroup>
-                </form>
-              </div>
-            </InputGroup>
-          </div>
-
-          <Separator className="my-1" />
-
-          <div className="grid w-full gap-4 bg-background">
-            <InputGroup>
-              <InputGroupTextarea
-                id="input-text"
-                value={uuids.join("\n")}
-                className="text-muted-foreground"
-                readOnly
+        <form onSubmit={handleGenerateSubmit}>
+          <div className="flex flex-1 flex-col gap-4 pt-0">
+            <Form2Column>
+              <FormSwitch
+                id="uppercase"
+                label="Uppercase"
+                checked={isUppercase}
+                onCheckedChange={handleUppercaseChange}
               />
-              <InputGroupAddon align="block-start">
-                <Label htmlFor="input-text" className="text-foreground">
-                  UUIDs
-                </Label>
-                {uuids.length > 0 && (
+
+              <FormInputNumber
+                id="count"
+                label="How Many"
+                value={count}
+                min={1}
+                max={50}
+                isDisabled={isGenerate}
+                onValueChange={(e) => handleCountChange(Number(e))}
+              />
+            </Form2Column>
+
+            <FormButtonSubmit id="submit" label="Generate" disabled={isGenerate} />
+
+            <Separator className="my-1" />
+
+            <div className="grid w-full gap-4 bg-background">
+              <InputGroup>
+                <InputGroupTextarea
+                  id="input-text"
+                  value={uuids.join("\n")}
+                  className="text-muted-foreground font-mono"
+                  readOnly
+                />
+                <InputGroupAddon align="block-start">
+                  <Label htmlFor="input-text" className="text-foreground">
+                    UUIDs
+                  </Label>
                   <InputGroupButton
                     variant="ghost"
                     aria-label="Help"
@@ -149,12 +111,12 @@ const GeneratorUuidPage = () => {
                   >
                     <X />
                   </InputGroupButton>
-                )}
-              </InputGroupAddon>
-            </InputGroup>
+                </InputGroupAddon>
+              </InputGroup>
+            </div>
           </div>
-        </div >
-      </AppMain >
+        </form>
+      </AppMain>
     </>
   )
 }
