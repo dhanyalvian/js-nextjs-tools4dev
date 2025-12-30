@@ -3,16 +3,14 @@
 "use client"
 
 import { AppHeader, AppMain } from "@/components/core/app-layout"
-import { Form2Column, FormButtonSubmit, FormInputNumber, FormSwitch } from "@/components/page/form"
 import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupButton,
-  InputGroupTextarea,
-} from "@/components/ui/input-group"
-import { Label } from "@/components/ui/label"
+  Form2Column,
+  FormInputSubmit,
+  FormInputNumber,
+  FormInputTextareaResult,
+  FormSwitch,
+} from "@/components/page/form"
 import { Separator } from "@/components/ui/separator"
-import { X } from "lucide-react"
 import { useState } from "react"
 import { v4 as uuidv4 } from 'uuid'
 
@@ -29,7 +27,7 @@ const GeneratorUuidPage = () => {
   const [isUppercase, setIsUppercase] = useState<boolean>(false)
   const [isGenerate, setIsGenerate] = useState<boolean>(false)
   const [count, setCount] = useState<number>(1)
-  const [uuids, setUuids] = useState<string[]>([])
+  const [resultArr, setResultArr] = useState<string[]>([])
 
   const handleUppercaseChange = (value: boolean) => {
     setIsUppercase(value)
@@ -52,12 +50,8 @@ const GeneratorUuidPage = () => {
       uuidsArray.push(uuid)
     }
 
-    setUuids(uuidsArray)
+    setResultArr(uuidsArray)
     setIsGenerate(false)
-  }
-
-  const handleClearResult = () => {
-    setUuids([])
   }
 
   return (
@@ -86,34 +80,19 @@ const GeneratorUuidPage = () => {
               />
             </Form2Column>
 
-            <FormButtonSubmit id="submit" label="Generate" disabled={isGenerate} />
+            <FormInputSubmit
+              id="submit"
+              label="Generate"
+              disabled={isGenerate}
+            />
 
             <Separator className="my-1" />
 
-            <div className="grid w-full gap-4 bg-background">
-              <InputGroup>
-                <InputGroupTextarea
-                  id="input-text"
-                  value={uuids.join("\n")}
-                  className="text-muted-foreground font-mono"
-                  readOnly
-                />
-                <InputGroupAddon align="block-start">
-                  <Label htmlFor="input-text" className="text-foreground">
-                    UUIDs
-                  </Label>
-                  <InputGroupButton
-                    variant="ghost"
-                    aria-label="Help"
-                    className="ml-auto rounded-full"
-                    size="icon-xs"
-                    onClick={handleClearResult}
-                  >
-                    <X />
-                  </InputGroupButton>
-                </InputGroupAddon>
-              </InputGroup>
-            </div>
+            <FormInputTextareaResult
+              label="UUIDs"
+              result={resultArr}
+              setResult={setResultArr}
+            />
           </div>
         </form>
       </AppMain>
