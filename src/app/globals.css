@@ -141,4 +141,8 @@ body {
   label {
     @apply cursor-pointer select-none;
   }
+
+  .icon-frame {
+    @apply bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-xl;
+  }
 }

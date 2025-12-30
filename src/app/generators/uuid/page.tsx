@@ -139,15 +139,17 @@ const GeneratorUuidPage = () => {
                 <Label htmlFor="input-text" className="text-foreground">
                   UUIDs
                 </Label>
-                <InputGroupButton
-                  variant="ghost"
-                  aria-label="Help"
-                  className="ml-auto rounded-full"
-                  size="icon-xs"
-                  onClick={handleClearResult}
-                >
-                  <X />
-                </InputGroupButton>
+                {uuids.length > 0 && (
+                  <InputGroupButton
+                    variant="ghost"
+                    aria-label="Help"
+                    className="ml-auto rounded-full"
+                    size="icon-xs"
+                    onClick={handleClearResult}
+                  >
+                    <X />
+                  </InputGroupButton>
+                )}
               </InputGroupAddon>
             </InputGroup>
           </div>

@@ -105,9 +105,10 @@ export const dataNav = {
           demo: true,
         },
         {
-          title: "NanoID",
+          title: "Nano ID",
           url: "/generators/nanoid",
           icon: Barcode,
+          demo: true,
         },
       ],
     },
