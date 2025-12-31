@@ -3,9 +3,17 @@
 import { X } from "lucide-react"
 import { Button } from "../ui/button"
 import { Input } from "../ui/input"
-import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupTextarea } from "../ui/input-group"
+import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput, InputGroupTextarea } from "../ui/input-group"
 import { Label } from "../ui/label"
 import { Switch } from "../ui/switch"
+
+export const FormArea = ({ children }: { children: React.ReactNode }) => {
+  return (
+    <div className="flex flex-1 flex-col gap-4 pt-0">
+      {children}
+    </div>
+  )
+}
 
 export const Form2Column = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -89,6 +97,44 @@ export const FormInputSubmit = ({ id, label, disabled }: FormInputSubmitProps) =
       >
         {label}
       </Button>
+    </div>
+  )
+}
+
+interface FormInputTextResultProps {
+  id: string,
+  label: string,
+  value: string,
+  readonly?: boolean,
+}
+export const FormInputTextResult = ({
+  id,
+  label,
+  value,
+  readonly = false,
+}: FormInputTextResultProps) => {
+  return (
+    <div className="grid w-full gap-4 bg-background">
+      <InputGroup>
+        <InputGroupInput
+          id={id}
+          value={value}
+          className="text-muted-foreground"
+          readOnly={readonly}
+        />
+        <InputGroupAddon align="block-start">
+          <Label htmlFor={id} className="text-foreground">
+            {label}
+          </Label>
+          <InputGroupButton
+            variant="ghost"
+            aria-label="Help"
+            className="ml-auto rounded-full"
+            size="icon-xs"
+          >
+          </InputGroupButton>
+        </InputGroupAddon>
+      </InputGroup>
     </div>
   )
 }

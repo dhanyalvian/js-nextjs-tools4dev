@@ -3,23 +3,18 @@
 "use client"
 
 import { AppHeader, AppMain } from "@/components/core/app-layout"
-import { Button } from "@/components/ui/button"
-import { ButtonGroup } from "@/components/ui/button-group"
-import { Input } from "@/components/ui/input"
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupButton,
-  InputGroupInput,
-  InputGroupTextarea,
-} from "@/components/ui/input-group"
-import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
-import { Spinner } from "@/components/ui/spinner"
-import { Switch } from "@/components/ui/switch"
-import { Ban, CaseLower, CaseUpper, Check, Repeat1, Section, X } from "lucide-react"
 import { useState } from "react"
 import { customAlphabet } from "nanoid"
+import {
+  Form2Column,
+  FormArea,
+  FormInputNumber,
+  FormInputSubmit,
+  FormInputTextareaResult,
+  FormInputTextResult,
+  FormSwitch,
+} from "@/components/page/form"
 
 const breadcrumbItems = [
   {
@@ -144,187 +139,86 @@ const GeneratorNanoIdPage = () => {
     setIsGenerate(false)
   }
 
-  const handleClearResult = () => {
-    setNanoids([])
-  }
-
   return (
     <>
       <AppHeader breadcrumbItems={breadcrumbItems} />
 
       <AppMain>
         <form onSubmit={handleGenerateSubmit}>
-          <div className="flex flex-1 flex-col gap-4 pt-0">
-            <div className="flex flex-row justify-between items-center gap-4">
-              <div className="bg-background w-full">
-                <InputGroup className="px-3 py-6 flex justify-between items-center gap-2">
-                  <Label htmlFor="inc-number" className="text-foreground">
-                    Number
-                  </Label>
-                  <Switch
-                    id="inc-number"
-                    checked={isIncNumber}
-                    onCheckedChange={(checked) => handleIncNumberChange(checked)}
-                  />
-                </InputGroup>
-              </div>
+          <FormArea>
+            <Form2Column>
+              <FormSwitch
+                id="inc-number"
+                label="Include Numbers"
+                checked={isIncNumber}
+                onCheckedChange={handleIncNumberChange}
+              />
 
-              <div className="bg-background w-full">
-                <InputGroup className="px-3 py-6 flex justify-between items-center gap-2">
-                  <Label htmlFor="inc-symbol" className="text-foreground">
-                    Symbol
-                  </Label>
-                  <Switch
-                    id="inc-symbol"
-                    checked={isIncSymbol}
-                    onCheckedChange={(checked) => handleIncSymbolChange(checked)}
-                  />
-                </InputGroup>
-              </div>
-            </div>
+              <FormSwitch
+                id="inc-symbol"
+                label="Include Symbols"
+                checked={isIncSymbol}
+                onCheckedChange={handleIncSymbolChange}
+              />
 
-            <div className="flex flex-row justify-between items-center gap-4">
-              <div className="bg-background w-full">
-                <InputGroup className="px-3 py-6 flex justify-between items-center gap-2">
-                  <Label htmlFor="inc-uppercase" className="text-foreground">
-                    Uppercase
-                  </Label>
-                  <Switch
-                    id="inc-uppercase"
-                    checked={isIncUppercase}
-                    onCheckedChange={(checked) => handleIncUppercaseChange(checked)}
-                  />
-                </InputGroup>
-              </div>
+              <FormSwitch
+                id="inc-uppercase"
+                label="Include Uppercases"
+                checked={isIncUppercase}
+                onCheckedChange={handleIncUppercaseChange}
+              />
 
-              <div className="bg-background w-full">
-                <InputGroup className="px-3 py-6 flex justify-between items-center gap-2">
-                  <Label htmlFor="inc-lowercase" className="text-foreground">
-                    Lowercase
-                  </Label>
-                  <Switch
-                    id="inc-lowercase"
-                    checked={isIncLowercase}
-                    onCheckedChange={(checked) => handleIncLowercaseChange(checked)}
-                  />
-                </InputGroup>
-              </div>
-            </div>
+              <FormSwitch
+                id="inc-lowercase"
+                label="Include Lowercases"
+                checked={isIncLowercase}
+                onCheckedChange={handleIncLowercaseChange}
+              />
 
-            <div className="flex flex-row justify-between items-center gap-4">
-              <div className="bg-background w-full">
-                <InputGroup className="px-3 py-6 flex justify-between items-center gap-2">
-                  <Label htmlFor="count" className="text-foreground">
-                    Length
-                  </Label>
-                  <div className="flex items-center gap-2">
-                    <Input
-                      type="number"
-                      min="8"
-                      max="50"
-                      placeholder="21"
-                      value={lengthValue}
-                      className="h-8 w-17 shadow-none"
-                      disabled={isGenerate}
-                      onChange={(e) => handleLengthChange(Number(e.target.value))}
-                    />
-                  </div>
-                </InputGroup>
-              </div>
+              <FormInputNumber
+                id="length"
+                label="Length"
+                value={lengthValue}
+                min={8}
+                max={50}
+                isDisabled={isGenerate}
+                onValueChange={handleLengthChange}
+              />
 
-              <div className="bg-background w-full">
-                <InputGroup className="px-3 py-6 flex justify-between items-center gap-2">
-                  <Label htmlFor="count" className="text-foreground">
-                    How Many
-                  </Label>
+              <FormInputNumber
+                id="count"
+                label="How Many"
+                value={countValue}
+                min={1}
+                max={50}
+                isDisabled={isGenerate}
+                onValueChange={handleCountChange}
+              />
+            </Form2Column>
 
-                  <div className="flex items-center gap-2">
-                    <ButtonGroup>
-                      <Input
-                        type="number"
-                        min="1"
-                        max="50"
-                        placeholder="1"
-                        value={countValue}
-                        className="h-8 w-17 shadow-none"
-                        disabled={isGenerate}
-                        onChange={(e) => handleCountChange(Number(e.target.value))}
-                      />
-                    </ButtonGroup>
-                  </div>
-                </InputGroup>
-              </div>
-            </div>
+            <FormInputTextResult
+              id="seeds"
+              label="Seeds"
+              value={seedValue.number + seedValue.symbol + seedValue.uppercase + seedValue.lowercase}
+              readonly={true}
+            />
 
-            <div className="bg-background">
-              <InputGroup>
-                <InputGroupInput
-                  id="input-text"
-                  value={seedValue.number + seedValue.symbol + seedValue.uppercase + seedValue.lowercase}
-                  className="text-muted-foreground"
-                  readOnly
-                />
-                <InputGroupAddon align="block-start">
-                  <Label htmlFor="input-text" className="text-foreground">
-                    Seeds
-                  </Label>
-                  <InputGroupButton
-                    variant="ghost"
-                    aria-label="Help"
-                    className="ml-auto rounded-full"
-                    size="icon-xs"
-                  >
-                  </InputGroupButton>
-                </InputGroupAddon>
-              </InputGroup>
-            </div>
-
-            <div>
-              <Button
-                variant="default"
-                size="default"
-                className="rounded-sm shadow-xs"
-                disabled={isGenerate || seedValue.number + seedValue.symbol + seedValue.uppercase + seedValue.lowercase === ""}
-                type="submit"
-              >
-                {isGenerate
-                  ? <><Spinner /> Generating...</>
-                  : "Generate"
-                }
-              </Button>
-            </div>
+            <FormInputSubmit
+              id="submit"
+              label="Generate"
+              disabled={isGenerate || seedValue.number + seedValue.symbol + seedValue.uppercase + seedValue.lowercase === ""}
+            />
 
             <Separator className="my-1" />
 
-            <div className="grid w-full gap-4 bg-background">
-              <InputGroup>
-                <InputGroupTextarea
-                  id="input-text"
-                  value={nanoids.join("\n")}
-                  className="text-muted-foreground"
-                  readOnly
-                />
-                <InputGroupAddon align="block-start">
-                  <Label htmlFor="input-text" className="text-foreground">
-                    Nano IDs
-                  </Label>
-                  {nanoids.length > 0 && (
-                    <InputGroupButton
-                      variant="ghost"
-                      aria-label="Help"
-                      className="ml-auto rounded-full"
-                      size="icon-xs"
-                      onClick={handleClearResult}
-                    >
-                      <X />
-                    </InputGroupButton>
-                  )}
-                </InputGroupAddon>
-              </InputGroup>
-            </div>
-          </div >
-        </form >
-      </AppMain >
+            <FormInputTextareaResult
+              label="Nano IDs"
+              result={nanoids}
+              setResult={setNanoids}
+            />
+          </FormArea>
+        </form>
+      </AppMain>
     </>
   )
 }
