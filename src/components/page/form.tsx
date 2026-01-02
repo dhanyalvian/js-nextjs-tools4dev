@@ -1,6 +1,6 @@
 //- src/components/page/form.tsx
 
-import { X } from "lucide-react"
+import { CheckCheck, Copy, X } from "lucide-react"
 import { Button } from "../ui/button"
 import { Input } from "../ui/input"
 import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput, InputGroupTextarea } from "../ui/input-group"
@@ -106,12 +106,18 @@ interface FormInputTextResultProps {
   label: string,
   value: string,
   readonly?: boolean,
+  iconCopied?: boolean,
+  isCopied?: boolean,
+  setIsCopied?: React.Dispatch<React.SetStateAction<boolean>>,
 }
 export const FormInputTextResult = ({
   id,
   label,
   value,
   readonly = false,
+  iconCopied = false,
+  isCopied = false,
+  setIsCopied,
 }: FormInputTextResultProps) => {
   return (
     <div className="grid w-full gap-4 bg-background">
@@ -128,10 +134,27 @@ export const FormInputTextResult = ({
           </Label>
           <InputGroupButton
             variant="ghost"
-            aria-label="Help"
+            aria-label="Copy to clipboard"
             className="ml-auto rounded-full"
-            size="icon-xs"
+            size="xs"
+            onClick={() => {
+              navigator.clipboard.writeText(value)
+              setIsCopied?.(true)
+              setTimeout(() => {
+                setIsCopied?.(false)
+              }, 2000)
+            }}
           >
+            {value.length > 0 && iconCopied && (
+              isCopied
+                ? (
+                  <>
+                    <span className="text-xs">Copied</span>
+                    <CheckCheck className="transition-all duration-200" />
+                  </>
+                )
+                : <Copy className="transition-all duration-200" />
+            )}
           </InputGroupButton>
         </InputGroupAddon>
       </InputGroup>
