@@ -11,13 +11,11 @@ import {
 } from "@/components/ui/input-group"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
-import { Copy, Check } from "lucide-react"
 import { useState } from "react"
 import * as crypto from "crypto"
-import { Switch } from "@/components/ui/switch"
 import { NativeSelect, NativeSelectOption } from "@/components/ui/native-select"
-import { CopyToClipboard } from "@/hooks/use-copy"
+import { Form2Column, FormArea, FormInputTextResult, FormSwitch } from "@/components/page/form"
+import { X } from "lucide-react"
 
 const breadcrumbItems = [
   {
@@ -27,47 +25,6 @@ const breadcrumbItems = [
     label: "Hash",
   },
 ]
-
-interface hashResult {
-  "md5": string,
-  "sha1": string,
-  "sha256": string,
-  "sha512": string,
-}
-
-interface copyResult {
-  "md5": boolean,
-  "sha1": boolean,
-  "sha256": boolean,
-  "sha512": boolean,
-}
-
-const hashTypes: {
-  key: keyof hashResult,
-  title: string,
-  value: string
-}[] = [
-    {
-      "key": "md5",
-      "title": "MD5",
-      "value": "edc70457d9ddad2ba2ad578b66af0912"
-    },
-    {
-      "key": "sha1",
-      "title": "SHA-1",
-      "value": "a6722b902d1ba545a510cad153fd2fc3e7c1e2ac"
-    },
-    {
-      "key": "sha256",
-      "title": "SHA-256",
-      "value": "41aa42765f552f704c7d64f8b73278474b5c6bf895a15e69ceedf7b0e49541ea"
-    },
-    {
-      "key": "sha512",
-      "title": "SHA-512",
-      "value": "65fe99cd80f3ff9c8d28a2fb41827c3471e95138c563402aaa01942cea172da70284b382fd0039433c8c2490c8cb9173071e5d34e870d6c61cb8b7e6b38b5cb5"
-    },
-  ]
 
 interface hashDataProps {
   algorithm: string,
@@ -90,21 +47,19 @@ const hashData = ({ algorithm, data, uppercase, outputType }: hashDataProps) => 
 }
 
 const GeneratorHashPage = () => {
-  const [result, setResult] = useState<hashResult>({
-    "md5": "",
-    "sha1": "",
-    "sha256": "",
-    "sha512": "",
-  })
-  const [isUppercase, setIsUppercase] = useState<boolean>(false)
   const [outputType, setOutputType] = useState<crypto.BinaryToTextEncoding>("hex")
+  const [isUppercase, setIsUppercase] = useState<boolean>(false)
   const [inputText, setInputText] = useState<string>("")
-  const [isCopied, setIsCopied] = useState<copyResult>({
-    "md5": false,
-    "sha1": false,
-    "sha256": false,
-    "sha512": false,
-  })
+
+  const [resultMd5, setResultMd5] = useState<string>("")
+  const [resultSha1, setResultSha1] = useState<string>("")
+  const [resultSha256, setResultSha256] = useState<string>("")
+  const [resultSha512, setResultSha512] = useState<string>("")
+
+  const [isCopiedMd5, setIsCopiedMd5] = useState<boolean>(false)
+  const [isCopiedSha1, setIsCopiedSha1] = useState<boolean>(false)
+  const [isCopiedSha256, setIsCopiedSha256] = useState<boolean>(false)
+  const [isCopiedSha512, setIsCopiedSha512] = useState<boolean>(false)
 
   const handleInputTextChange = (
     value: string,
@@ -115,12 +70,11 @@ const GeneratorHashPage = () => {
     const currentUppercase = explicitUppercase ?? isUppercase
 
     setInputText(value)
-    setResult({
-      "md5": hashData({ algorithm: "md5", data: value, uppercase: currentUppercase, outputType: currentOutputType }),
-      "sha1": hashData({ algorithm: "sha1", data: value, uppercase: currentUppercase, outputType: currentOutputType }),
-      "sha256": hashData({ algorithm: "sha256", data: value, uppercase: currentUppercase, outputType: currentOutputType }),
-      "sha512": hashData({ algorithm: "sha512", data: value, uppercase: currentUppercase, outputType: currentOutputType }),
-    })
+
+    setResultMd5(hashData({ algorithm: "md5", data: value, uppercase: currentUppercase, outputType: currentOutputType }))
+    setResultSha1(hashData({ algorithm: "sha1", data: value, uppercase: currentUppercase, outputType: currentOutputType }))
+    setResultSha256(hashData({ algorithm: "sha256", data: value, uppercase: currentUppercase, outputType: currentOutputType }))
+    setResultSha512(hashData({ algorithm: "sha512", data: value, uppercase: currentUppercase, outputType: currentOutputType }))
   }
 
   const handleOutputTypeChange = (
@@ -131,25 +85,19 @@ const GeneratorHashPage = () => {
     handleInputTextChange(inputText, value)
   }
 
-  const handleUppercaseChange = (value: boolean, inputText: string) => {
+  const handleUppercaseChange = (value: boolean) => {
     setIsUppercase(value)
     handleInputTextChange(inputText, undefined, value)
   }
 
-  const handleCopyToClipboard = (key: keyof copyResult, value: string) => {
-    if (value === "") return
-
-    CopyToClipboard(value)
-    setIsCopied({
-      ...isCopied,
-      [key]: true,
-    })
-    setTimeout(() => {
-      setIsCopied({
-        ...isCopied,
-        [key]: false,
-      })
-    }, 2000)
+  const handleClear = () => {
+    setOutputType("hex")
+    setIsUppercase(false)
+    setInputText("")
+    setResultMd5("")
+    setResultSha1("")
+    setResultSha256("")
+    setResultSha512("")
   }
 
   return (
@@ -157,8 +105,37 @@ const GeneratorHashPage = () => {
       <AppHeader breadcrumbItems={breadcrumbItems} />
 
       <AppMain>
-        <div className="flex flex-1 flex-col gap-4 pt-0">
-          <div className="bg-background">
+        <FormArea>
+          <Form2Column>
+            <div className="bg-background w-full">
+              <InputGroup className="px-3 py-6 flex justify-between items-center gap-2">
+                <Label htmlFor="uppercase" className="text-foreground">
+                  Output Type
+                </Label>
+                <NativeSelect
+                  size="sm"
+                  defaultValue="hex"
+                  value={outputType}
+                  onChange={(e) => handleOutputTypeChange(
+                    e.target.value as crypto.BinaryToTextEncoding,
+                    inputText,
+                  )}
+                >
+                  <NativeSelectOption value="hex">Hex</NativeSelectOption>
+                  <NativeSelectOption value="base64">Base64</NativeSelectOption>
+                </NativeSelect>
+              </InputGroup>
+            </div>
+
+            <FormSwitch
+              id="uppercase"
+              label="Uppercase"
+              checked={isUppercase}
+              onCheckedChange={handleUppercaseChange}
+            />
+          </Form2Column>
+
+          <div className="bg-background w-full">
             <InputGroup>
               <InputGroupInput
                 id="input-text"
@@ -176,86 +153,61 @@ const GeneratorHashPage = () => {
                   aria-label="Help"
                   className="ml-auto rounded-full"
                   size="icon-xs"
+                  onClick={handleClear}
                 >
+                  {inputText.length > 0 && (
+                    <X />
+                  )}
                 </InputGroupButton>
               </InputGroupAddon>
             </InputGroup>
           </div>
 
-          <div className="bg-background">
-            <InputGroup className="px-3 py-6 flex justify-between items-center gap-2">
-              <Label htmlFor="uppercase" className="text-foreground">
-                Output Type
-              </Label>
-              <NativeSelect size="sm" onChange={(e) => handleOutputTypeChange(
-                e.target.value as crypto.BinaryToTextEncoding,
-                inputText,
-              )}>
-                <NativeSelectOption value="hex">Hex</NativeSelectOption>
-                <NativeSelectOption value="base64">Base64</NativeSelectOption>
-              </NativeSelect>
-            </InputGroup>
-          </div>
-
-          <div className="bg-background">
-            <InputGroup className="px-3 py-6 flex justify-between items-center gap-2">
-              <Label htmlFor="uppercase" className="text-foreground">
-                Uppercase
-              </Label>
-              <div className="flex items-center gap-2">
-                <span className="font-normal text-sm">
-                  {isUppercase ? "On" : "Off"}
-                </span>
-                <Switch
-                  id="uppercase"
-                  checked={isUppercase}
-                  onCheckedChange={(checked) => handleUppercaseChange(checked, inputText)}
-                />
-              </div>
-            </InputGroup>
-          </div>
-
           <Separator className="my-1" />
 
-          {hashTypes.map((row) => (
-            <div key={row.title} className="grid w-full gap-4 bg-background">
-              <InputGroup>
-                <InputGroupInput
-                  id={row.title}
-                  placeholder="..."
-                  readOnly
-                  value={result[row.key]}
-                  className="text-muted-foreground"
-                />
-                <InputGroupAddon align="block-start">
-                  <Label htmlFor={row.title} className="text-foreground">
-                    {row.title}
-                  </Label>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <InputGroupButton
-                        variant="ghost"
-                        aria-label="Help"
-                        className="ml-auto rounded-full"
-                        size="icon-xs"
-                        onClick={() => handleCopyToClipboard(row.key, result[row.key])}
-                      >
-                        {isCopied[row.key]
-                          ? <Check className="transition-all" />
-                          : <Copy className="transition-all" />
-                        }
-                      </InputGroupButton>
-                    </TooltipTrigger>
-                    <TooltipContent side="right" align="center">
-                      <p>{isCopied[row.key] ? "Copied" : "Copy to clipboard"}</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </InputGroupAddon>
-              </InputGroup>
-            </div>
-          ))}
-        </div>
-      </AppMain>
+          <Form2Column>
+            <FormInputTextResult
+              id="result-md5"
+              label="MD5"
+              value={resultMd5}
+              readonly={true}
+              iconCopied={true}
+              isCopied={isCopiedMd5}
+              setIsCopied={setIsCopiedMd5}
+            />
+
+            <FormInputTextResult
+              id="result-sha1"
+              label="SHA-1"
+              value={resultSha1}
+              readonly={true}
+              iconCopied={true}
+              isCopied={isCopiedSha1}
+              setIsCopied={setIsCopiedSha1}
+            />
+          </Form2Column>
+
+          <FormInputTextResult
+            id="result-sha256"
+            label="SHA-256"
+            value={resultSha256}
+            readonly={true}
+            iconCopied={true}
+            isCopied={isCopiedSha256}
+            setIsCopied={setIsCopiedSha256}
+          />
+
+          <FormInputTextResult
+            id="result-sha512"
+            label="SHA-512"
+            value={resultSha512}
+            readonly={true}
+            iconCopied={true}
+            isCopied={isCopiedSha512}
+            setIsCopied={setIsCopiedSha512}
+          />
+        </FormArea>
+      </AppMain >
     </>
   )
 }
