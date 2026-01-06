@@ -13,8 +13,7 @@ import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 import { useState } from "react"
 import * as crypto from "crypto"
-import { NativeSelect, NativeSelectOption } from "@/components/ui/native-select"
-import { Form2Column, FormArea, FormInputTextResult, FormSwitch } from "@/components/page/form"
+import { Form2Column, FormArea, FormDropdown, FormInputTextResult, FormSwitch } from "@/components/page/form"
 import { X } from "lucide-react"
 
 const breadcrumbItems = [
@@ -35,9 +34,15 @@ interface hashDataProps {
 const hashData = ({ algorithm, data, uppercase, outputType }: hashDataProps) => {
   if (!data) return ""
 
-  let result = crypto.createHash(algorithm)
-    .update(data)
-    .digest(outputType); // 'hex', 'base64', or 'latin1' encoding for output
+  let result = ""
+
+  if (algorithm === "md6") {
+    result = "coming soon"
+  } else {
+    result = crypto.createHash(algorithm)
+      .update(data)
+      .digest(outputType); // 'hex', 'base64', or 'latin1' encoding for output
+  }
 
   if (uppercase) {
     result = result.toUpperCase()
@@ -52,11 +57,13 @@ const GeneratorHashPage = () => {
   const [inputText, setInputText] = useState<string>("")
 
   const [resultMd5, setResultMd5] = useState<string>("")
+  const [resultMd6, setResultMd6] = useState<string>("")
   const [resultSha1, setResultSha1] = useState<string>("")
   const [resultSha256, setResultSha256] = useState<string>("")
   const [resultSha512, setResultSha512] = useState<string>("")
 
   const [isCopiedMd5, setIsCopiedMd5] = useState<boolean>(false)
+  const [isCopiedMd6, setIsCopiedMd6] = useState<boolean>(false)
   const [isCopiedSha1, setIsCopiedSha1] = useState<boolean>(false)
   const [isCopiedSha256, setIsCopiedSha256] = useState<boolean>(false)
   const [isCopiedSha512, setIsCopiedSha512] = useState<boolean>(false)
@@ -70,19 +77,16 @@ const GeneratorHashPage = () => {
     const currentUppercase = explicitUppercase ?? isUppercase
 
     setInputText(value)
-
     setResultMd5(hashData({ algorithm: "md5", data: value, uppercase: currentUppercase, outputType: currentOutputType }))
+    setResultMd6(hashData({ algorithm: "md6", data: value, uppercase: currentUppercase, outputType: currentOutputType }))
     setResultSha1(hashData({ algorithm: "sha1", data: value, uppercase: currentUppercase, outputType: currentOutputType }))
     setResultSha256(hashData({ algorithm: "sha256", data: value, uppercase: currentUppercase, outputType: currentOutputType }))
     setResultSha512(hashData({ algorithm: "sha512", data: value, uppercase: currentUppercase, outputType: currentOutputType }))
   }
 
-  const handleOutputTypeChange = (
-    value: crypto.BinaryToTextEncoding,
-    inputText: string,
-  ) => {
-    setOutputType(value)
-    handleInputTextChange(inputText, value)
+  const handleOutputTypeChange = (value: string) => {
+    setOutputType(value as crypto.BinaryToTextEncoding)
+    handleInputTextChange(inputText, value as crypto.BinaryToTextEncoding)
   }
 
   const handleUppercaseChange = (value: boolean) => {
@@ -91,10 +95,9 @@ const GeneratorHashPage = () => {
   }
 
   const handleClear = () => {
-    setOutputType("hex")
-    setIsUppercase(false)
     setInputText("")
     setResultMd5("")
+    setResultMd6("")
     setResultSha1("")
     setResultSha256("")
     setResultSha512("")
@@ -107,31 +110,23 @@ const GeneratorHashPage = () => {
       <AppMain>
         <FormArea>
           <Form2Column>
-            <div className="bg-background w-full">
-              <InputGroup className="px-3 py-6 flex justify-between items-center gap-2">
-                <Label htmlFor="uppercase" className="text-foreground">
-                  Output Type
-                </Label>
-                <NativeSelect
-                  size="sm"
-                  defaultValue="hex"
-                  value={outputType}
-                  onChange={(e) => handleOutputTypeChange(
-                    e.target.value as crypto.BinaryToTextEncoding,
-                    inputText,
-                  )}
-                >
-                  <NativeSelectOption value="hex">Hex</NativeSelectOption>
-                  <NativeSelectOption value="base64">Base64</NativeSelectOption>
-                </NativeSelect>
-              </InputGroup>
-            </div>
-
             <FormSwitch
               id="uppercase"
               label="Uppercase"
               checked={isUppercase}
               onCheckedChange={handleUppercaseChange}
+            />
+
+            <FormDropdown
+              id="output-type"
+              label="Output Type"
+              options={[
+                { value: "hex", label: "Hex" },
+                { value: "base64", label: "Base64" },
+              ]}
+              value={outputType}
+              defaultValue="hex"
+              onValueChange={handleOutputTypeChange}
             />
           </Form2Column>
 
@@ -177,6 +172,16 @@ const GeneratorHashPage = () => {
             />
 
             <FormInputTextResult
+              id="result-md6"
+              label="MD6"
+              value={resultMd6}
+              readonly={true}
+              iconCopied={true}
+              isCopied={isCopiedMd6}
+              setIsCopied={setIsCopiedMd6}
+            />
+
+            <FormInputTextResult
               id="result-sha1"
               label="SHA-1"
               value={resultSha1}
@@ -185,17 +190,17 @@ const GeneratorHashPage = () => {
               isCopied={isCopiedSha1}
               setIsCopied={setIsCopiedSha1}
             />
-          </Form2Column>
 
-          <FormInputTextResult
-            id="result-sha256"
-            label="SHA-256"
-            value={resultSha256}
-            readonly={true}
-            iconCopied={true}
-            isCopied={isCopiedSha256}
-            setIsCopied={setIsCopiedSha256}
-          />
+            <FormInputTextResult
+              id="result-sha256"
+              label="SHA-256"
+              value={resultSha256}
+              readonly={true}
+              iconCopied={true}
+              isCopied={isCopiedSha256}
+              setIsCopied={setIsCopiedSha256}
+            />
+          </Form2Column>
 
           <FormInputTextResult
             id="result-sha512"
