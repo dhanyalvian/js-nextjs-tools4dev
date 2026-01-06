@@ -6,6 +6,7 @@ import { Input } from "../ui/input"
 import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput, InputGroupTextarea } from "../ui/input-group"
 import { Label } from "../ui/label"
 import { Switch } from "../ui/switch"
+import { NativeSelect, NativeSelectOption } from "../ui/native-select"
 
 export const FormArea = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -29,7 +30,12 @@ interface FormSwitchProps {
   checked: boolean,
   onCheckedChange: (checked: boolean) => void,
 }
-export const FormSwitch = ({ id, label, checked, onCheckedChange }: FormSwitchProps) => {
+export const FormSwitch = ({
+  id,
+  label,
+  checked,
+  onCheckedChange,
+}: FormSwitchProps) => {
   return (
     <div className="bg-background w-full">
       <InputGroup className="px-3 py-6 flex justify-between items-center gap-2">
@@ -46,6 +52,45 @@ export const FormSwitch = ({ id, label, checked, onCheckedChange }: FormSwitchPr
   )
 }
 
+interface FormDropdownProps {
+  id: string,
+  label: string,
+  options: { value: string, label: string }[],
+  value: string,
+  defaultValue?: string,
+  onValueChange?: (value: string) => void,
+}
+export const FormDropdown = ({
+  id,
+  label,
+  options,
+  value,
+  defaultValue,
+  onValueChange,
+}: FormDropdownProps) => {
+  return (
+    <div className="bg-background w-full">
+      <InputGroup className="px-3 py-6 flex justify-between items-center gap-2">
+        <Label htmlFor={id} className="text-foreground">
+          {label}
+        </Label>
+        <NativeSelect
+          size="sm"
+          defaultValue={defaultValue}
+          value={value}
+          onChange={(e) => onValueChange?.(e.target.value)}
+        >
+          {options.map((option) => (
+            <NativeSelectOption key={option.value} value={option.value}>
+              {option.label}
+            </NativeSelectOption>
+          ))}
+        </NativeSelect>
+      </InputGroup>
+    </div>
+  )
+}
+
 interface FormInputNumberProps {
   id: string,
   label: string,
@@ -55,7 +100,15 @@ interface FormInputNumberProps {
   isDisabled: boolean,
   onValueChange: (value: number) => void,
 }
-export const FormInputNumber = ({ id, label, value, min, max, isDisabled, onValueChange }: FormInputNumberProps) => {
+export const FormInputNumber = ({
+  id,
+  label,
+  value,
+  min,
+  max,
+  isDisabled,
+  onValueChange,
+}: FormInputNumberProps) => {
   return (
     <div className="bg-background w-full">
       <InputGroup className="px-3 py-6 flex justify-between items-center gap-2">
@@ -74,6 +127,51 @@ export const FormInputNumber = ({ id, label, value, min, max, isDisabled, onValu
             onChange={(e) => onValueChange(Number(e.target.value))}
           />
         </div>
+      </InputGroup>
+    </div>
+  )
+}
+
+interface FormInputTextareaProps {
+  id: string,
+  label: string,
+  value: string,
+  isDisabled: boolean,
+  onValueChange: (value: string) => void,
+}
+export const FormInputTextarea = ({
+  id,
+  label,
+  value,
+  onValueChange,
+}: FormInputTextareaProps) => {
+  return (
+    <div className="grid w-full gap-4 bg-background">
+      <InputGroup>
+        <InputGroupTextarea
+          id="input-text"
+          value={value}
+          className="text-muted-foreground"
+          onChange={(e) => onValueChange(e.target.value)}
+        />
+
+        <InputGroupAddon align="block-start">
+          <Label htmlFor="input-text" className="text-foreground">
+            {label}
+          </Label>
+
+          <InputGroupButton
+            variant="ghost"
+            aria-label="Help"
+            className="ml-auto rounded-full"
+            size="icon-xs"
+            onClick={() => onValueChange("")}
+          >
+            {value !== "" && (
+              <X />
+            )}
+          </InputGroupButton>
+        </InputGroupAddon>
       </InputGroup>
     </div>
   )
@@ -164,14 +262,72 @@ export const FormInputTextResult = ({
 
 interface FormInputTextareaResultProps {
   label: string,
-  result: string[],
-  setResult: React.Dispatch<React.SetStateAction<string[]>>,
+  result: string,
+  setResult: React.Dispatch<React.SetStateAction<string>>,
+  isCopied?: boolean,
+  setIsCopied?: React.Dispatch<React.SetStateAction<boolean>>,
 }
 export const FormInputTextareaResult = ({
   label,
   result,
-  setResult,
+  isCopied = false,
+  setIsCopied,
 }: FormInputTextareaResultProps) => {
+  return (
+    <div className="grid w-full gap-4 bg-background">
+      <InputGroup>
+        <InputGroupTextarea
+          id="input-text"
+          value={result}
+          className="text-muted-foreground"
+          readOnly
+        />
+
+        <InputGroupAddon align="block-start">
+          <Label htmlFor="input-text" className="text-foreground">
+            {label}
+          </Label>
+
+          <InputGroupButton
+            variant="ghost"
+            aria-label="Help"
+            className="ml-auto rounded-full"
+            size="xs"
+            onClick={() => {
+              navigator.clipboard.writeText(result)
+              setIsCopied?.(true)
+              setTimeout(() => {
+                setIsCopied?.(false)
+              }, 2000)
+            }}
+          >
+            {result.length > 0 && (
+              isCopied
+                ? (
+                  <>
+                    <span className="text-xs">Copied</span>
+                    <CheckCheck className="transition-all duration-200" />
+                  </>
+                )
+                : <Copy className="transition-all duration-200" />
+            )}
+          </InputGroupButton>
+        </InputGroupAddon>
+      </InputGroup>
+    </div>
+  )
+}
+
+interface FormInputTextareaResultArrProps {
+  label: string,
+  result: string[],
+  setResult: React.Dispatch<React.SetStateAction<string[]>>,
+}
+export const FormInputTextareaResultArr = ({
+  label,
+  result,
+  setResult,
+}: FormInputTextareaResultArrProps) => {
   return (
     <div className="grid w-full gap-4 bg-background">
       <InputGroup>

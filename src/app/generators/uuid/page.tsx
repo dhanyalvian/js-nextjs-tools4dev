@@ -7,7 +7,7 @@ import {
   Form2Column,
   FormInputSubmit,
   FormInputNumber,
-  FormInputTextareaResult,
+  FormInputTextareaResultArr,
   FormSwitch,
 } from "@/components/page/form"
 import { Separator } from "@/components/ui/separator"
@@ -88,7 +88,7 @@ const GeneratorUuidPage = () => {
 
             <Separator className="my-1" />
 
-            <FormInputTextareaResult
+            <FormInputTextareaResultArr
               label="UUIDs"
               result={resultArr}
               setResult={setResultArr}

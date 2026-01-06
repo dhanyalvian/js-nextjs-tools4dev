@@ -58,25 +58,27 @@ export const dataNav = {
       title: "Encoders / Decoders",
       url: "#",
       icon: Recycle,
+      demo: true,
       submenus: [
         {
           title: "HTML",
-          url: "/encode-decode/html",
+          url: "/encoders-decoders/html",
           icon: Code,
         },
         {
           title: "URL",
-          url: "/encode-decode/url",
+          url: "/encoders-decoders/url",
           icon: Link,
         },
         {
-          title: "Base64 Text",
-          url: "/encode-decode/base64",
+          title: "Base64",
+          url: "/encoders-decoders/base64",
           icon: ArrowDown10,
+          demo: true,
         },
         {
           title: "JWT",
-          url: "/encode-decode/jwt",
+          url: "/encoders-decoders/jwt",
           icon: Loader,
         },
       ],

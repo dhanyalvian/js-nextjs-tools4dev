@@ -11,7 +11,7 @@ import {
   FormArea,
   FormInputNumber,
   FormInputSubmit,
-  FormInputTextareaResult,
+  FormInputTextareaResultArr,
   FormInputTextResult,
   FormSwitch,
 } from "@/components/page/form"
@@ -211,7 +211,7 @@ const GeneratorNanoIdPage = () => {
 
             <Separator className="my-1" />
 
-            <FormInputTextareaResult
+            <FormInputTextareaResultArr
               label="Nano IDs"
               result={nanoids}
               setResult={setNanoids}
