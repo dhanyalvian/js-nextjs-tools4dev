@@ -7,6 +7,7 @@ import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput, InputGr
 import { Label } from "../ui/label"
 import { Switch } from "../ui/switch"
 import { NativeSelect, NativeSelectOption } from "../ui/native-select"
+import { cn } from "@/lib/utils"
 
 export const FormArea = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -138,12 +139,14 @@ interface FormInputTextareaProps {
   value: string,
   isDisabled: boolean,
   onValueChange: (value: string) => void,
+  className?: string,
 }
 export const FormInputTextarea = ({
   id,
   label,
   value,
   onValueChange,
+  className,
 }: FormInputTextareaProps) => {
   return (
     <div className="grid w-full gap-4 bg-background">
@@ -151,7 +154,7 @@ export const FormInputTextarea = ({
         <InputGroupTextarea
           id={id}
           value={value}
-          className="text-muted-foreground"
+          className={cn("text-muted-foreground", className)}
           onChange={(e) => onValueChange(e.target.value)}
         />
 
@@ -267,12 +270,14 @@ interface FormInputTextareaResultProps {
   setResult: React.Dispatch<React.SetStateAction<string>>,
   isCopied?: boolean,
   setIsCopied?: React.Dispatch<React.SetStateAction<boolean>>,
+  className?: string,
 }
 export const FormInputTextareaResult = ({
   label,
   result,
   isCopied = false,
   setIsCopied,
+  className,
 }: FormInputTextareaResultProps) => {
   return (
     <div className="grid w-full gap-4 bg-background">
@@ -280,7 +285,7 @@ export const FormInputTextareaResult = ({
         <InputGroupTextarea
           id="input-text"
           value={result}
-          className="text-muted-foreground"
+          className={cn("text-muted-foreground", className)}
           readOnly
         />
 
