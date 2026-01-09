@@ -64,6 +64,7 @@ export const dataNav = {
           title: "HTML",
           url: "/encoders-decoders/html",
           icon: Code,
+          demo: true,
         },
         {
           title: "URL",
