@@ -11,8 +11,7 @@ import {
   FormSwitch,
 } from "@/components/page/form"
 import { Separator } from "@/components/ui/separator"
-import { useState } from "react"
-import { v4 as uuidv4 } from 'uuid'
+import { useUuidStore } from "./handler"
 
 const breadcrumbItems = [
   {
@@ -24,35 +23,16 @@ const breadcrumbItems = [
 ]
 
 const GeneratorUuidPage = () => {
-  const [isUppercase, setIsUppercase] = useState<boolean>(false)
-  const [isGenerate, setIsGenerate] = useState<boolean>(false)
-  const [count, setCount] = useState<number>(1)
-  const [resultArr, setResultArr] = useState<string[]>([])
-
-  const handleUppercaseChange = (value: boolean) => {
-    setIsUppercase(value)
-  }
-
-  const handleCountChange = (value: number) => {
-    setCount(value)
-  }
-
-  const handleGenerateSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    setIsGenerate(true)
-    const uuidsArray: string[] = []
-
-    for (let i = 0; i < count; i++) {
-      let uuid = uuidv4()
-      if (isUppercase) {
-        uuid = uuid.toUpperCase()
-      }
-      uuidsArray.push(uuid)
-    }
-
-    setResultArr(uuidsArray)
-    setIsGenerate(false)
-  }
+  const {
+    isUppercase,
+    isGenerate,
+    count,
+    resultArr,
+    setResultArr,
+    handleUppercaseChange,
+    handleCountChange,
+    handleGenerateSubmit,
+  } = useUuidStore()
 
   return (
     <>

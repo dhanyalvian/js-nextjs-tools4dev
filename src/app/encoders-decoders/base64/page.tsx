@@ -11,8 +11,7 @@ import {
   FormInputTextareaResult,
 } from "@/components/page/form"
 import { Separator } from "@/components/ui/separator"
-import { Base64Encode, Base64Decode } from "@/lib/base64"
-import { useState } from "react"
+import { useBase64Store } from "./handler"
 
 const breadcrumbItems = [
   {
@@ -22,32 +21,20 @@ const breadcrumbItems = [
     label: "Base64",
   },
 ]
-const secretKey = ""
 
 const EncoderDecoderBase64Page = () => {
-  const [conversionValue, setConversionValue] = useState<string>("encode")
-  const [encodingValue, setEncodingValue] = useState<BufferEncoding>("utf-8")
-  const [inputText, setInputText] = useState<string>("")
-  const [result, setResult] = useState<string>("")
-  const [resultCopied, setResultCopied] = useState<boolean>(false)
-
-  const handleDropdownConversionChange = (value: string) => {
-    setConversionValue(value)
-    setInputText("")
-    setResult("")
-  }
-
-  const handleInputTextChange = (value: string) => {
-    if (conversionValue === "encode") {
-      const encryptValue = Base64Encode(value, encodingValue)
-      setInputText(value)
-      setResult(encryptValue)
-    } else {
-      const decryptValue = Base64Decode(value, encodingValue)
-      setInputText(value)
-      setResult(decryptValue)
-    }
-  }
+  const {
+    conversionValue,
+    encodingValue,
+    inputText,
+    result,
+    resultCopied,
+    setEncodingValue,
+    setResult,
+    setResultCopied,
+    handleDropdownConversionChange,
+    handleInputTextChange,
+  } = useBase64Store()
 
   return (
     <>
@@ -105,7 +92,3 @@ const EncoderDecoderBase64Page = () => {
 }
 
 export default EncoderDecoderBase64Page
-function base64encode(value: string) {
-  throw new Error("Function not implemented.")
-}
-
