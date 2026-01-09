@@ -70,7 +70,7 @@ const EncoderDecoderBase64Page = () => {
 
           <FormInputTextarea
             id="input-text"
-            label="Input Text"
+            label="Input"
             value={inputText}
             isDisabled={false}
             onValueChange={handleInputTextChange}
@@ -79,7 +79,7 @@ const EncoderDecoderBase64Page = () => {
           <Separator className="my-1" />
 
           <FormInputTextareaResult
-            label="Result"
+            label="Output"
             result={result}
             setResult={setResult}
             isCopied={resultCopied}

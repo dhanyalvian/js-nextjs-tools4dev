@@ -1,22 +1,22 @@
-//- src/app/encoders-decoders/html/page.tsx
+//- src/app/encoders-decoders/url/page.tsx
 
 "use client"
 
 import { AppHeader, AppMain } from "@/components/core/app-layout"
 import { FormArea, FormDropdown, FormInputTextarea, FormInputTextareaResult } from "@/components/page/form"
 import { Separator } from "@/components/ui/separator"
-import { useHtmlStore } from "./handler"
+import { useUrlStore } from "./handler"
 
 const breadcrumbItems = [
   {
     label: "Encoders / Decoders",
   },
   {
-    label: "HTML",
+    label: "URL",
   },
 ]
 
-const EncoderDecoderHtmlPage = () => {
+const EncoderDecoderUrlPage = () => {
   const {
     conversionValue,
     inputText,
@@ -26,7 +26,7 @@ const EncoderDecoderHtmlPage = () => {
     setResultCopied,
     handleDropdownConversionChange,
     handleInputTextChange,
-  } = useHtmlStore()
+  } = useUrlStore()
 
   return (
     <>
@@ -71,4 +71,4 @@ const EncoderDecoderHtmlPage = () => {
   )
 }
 
-export default EncoderDecoderHtmlPage
+export default EncoderDecoderUrlPage

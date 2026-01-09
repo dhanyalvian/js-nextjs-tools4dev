@@ -70,6 +70,7 @@ export const dataNav = {
           title: "URL",
           url: "/encoders-decoders/url",
           icon: Link,
+          demo: true,
         },
         {
           title: "Base64",
