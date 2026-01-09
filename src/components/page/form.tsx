@@ -149,14 +149,14 @@ export const FormInputTextarea = ({
     <div className="grid w-full gap-4 bg-background">
       <InputGroup>
         <InputGroupTextarea
-          id="input-text"
+          id={id}
           value={value}
           className="text-muted-foreground"
           onChange={(e) => onValueChange(e.target.value)}
         />
 
         <InputGroupAddon align="block-start">
-          <Label htmlFor="input-text" className="text-foreground">
+          <Label htmlFor={id} className="text-foreground">
             {label}
           </Label>
 
@@ -166,6 +166,7 @@ export const FormInputTextarea = ({
             className="ml-auto rounded-full"
             size="icon-xs"
             onClick={() => onValueChange("")}
+            disabled={value === ""}
           >
             {value !== "" && (
               <X />
@@ -300,6 +301,7 @@ export const FormInputTextareaResult = ({
                 setIsCopied?.(false)
               }, 2000)
             }}
+            disabled={result.length === 0}
           >
             {result.length > 0 && (
               isCopied
@@ -349,6 +351,7 @@ export const FormInputTextareaResultArr = ({
             className="ml-auto rounded-full"
             size="icon-xs"
             onClick={() => setResult([])}
+            disabled={result.length === 0}
           >
             {result.length > 0 && (
               <X />
