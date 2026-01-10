@@ -3,7 +3,12 @@
 "use client"
 
 import { AppHeader, AppMain } from "@/components/core/app-layout"
-import { FormArea, FormDropdown, FormInputTextarea, FormInputTextareaResult } from "@/components/page/form"
+import {
+  FormArea,
+  FormDropdown,
+  FormInputTextarea,
+  FormInputTextareaResult,
+} from "@/components/page/form"
 import { Separator } from "@/components/ui/separator"
 import { useUrlStore } from "./handler"
 
@@ -18,14 +23,14 @@ const breadcrumbItems = [
 
 const EncoderDecoderUrlPage = () => {
   const {
-    conversionValue,
-    inputText,
-    result,
-    resultCopied,
-    setResult,
-    setResultCopied,
+    conversionVal,
+    inputVal,
+    outputVal,
+    outputCopied,
+    setOutputVal,
+    setOutputCopied,
     handleDropdownConversionChange,
-    handleInputTextChange,
+    handleInputChange,
   } = useUrlStore()
 
   return (
@@ -41,29 +46,34 @@ const EncoderDecoderUrlPage = () => {
               { value: "encode", label: "Encode" },
               { value: "decode", label: "Decode" },
             ]}
-            value={conversionValue}
+            value={conversionVal}
             defaultValue="encode"
-            onValueChange={handleDropdownConversionChange}
+            onValueChange={(value) => handleDropdownConversionChange(
+              value,
+              inputVal,
+              outputVal,
+            )}
           />
 
           <FormInputTextarea
             id="input-text"
             label="Input"
-            value={inputText}
+            value={inputVal}
             isDisabled={false}
-            onValueChange={handleInputTextChange}
-            className="font-mono"
+            onValueChange={(value) => handleInputChange(
+              value,
+              conversionVal,
+            )}
           />
 
           <Separator className="my-1" />
 
           <FormInputTextareaResult
             label="Output"
-            result={result}
-            setResult={setResult}
-            isCopied={resultCopied}
-            setIsCopied={setResultCopied}
-            className="font-mono"
+            result={outputVal}
+            setResult={setOutputVal}
+            isCopied={outputCopied}
+            setIsCopied={setOutputCopied}
           />
         </FormArea>
       </AppMain>

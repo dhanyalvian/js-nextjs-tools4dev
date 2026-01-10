@@ -3,39 +3,45 @@
 import { useState } from "react"
 
 export const useUrlStore = () => {
-  const [conversionValue, setConversionValue] = useState<string>("encode")
-  const [inputText, setInputText] = useState<string>("")
-  const [result, setResult] = useState<string>("")
-  const [resultCopied, setResultCopied] = useState<boolean>(false)
+  const [conversionVal, setConversionVal] = useState<string>("encode")
+  const [inputVal, setInputVal] = useState<string>("")
+  const [outputVal, setOutputVal] = useState<string>("")
+  const [outputCopied, setOutputCopied] = useState<boolean>(false)
 
-  const handleDropdownConversionChange = (value: string) => {
-    setConversionValue(value)
-    setInputText("")
-    setResult("")
+  const handleDropdownConversionChange = (
+    conversion: string,
+    input: string,
+    output: string,
+  ) => {
+    setConversionVal(conversion)
+    handleInputChange(output, conversion)
   }
 
-  const handleInputTextChange = (value: string) => {
-    if (conversionValue === "encode") {
-      const encryptValue = encodeURIComponent(value)
-      setInputText(value)
-      setResult(encryptValue)
+  const handleInputChange = (
+    input: string,
+    conversion: string,
+  ) => {
+    if (conversion === "encode") {
+      const encryptVal = encodeURIComponent(input)
+      setInputVal(input)
+      setOutputVal(encryptVal)
     } else {
-      const decryptValue = decodeURIComponent(value)
-      setInputText(value)
-      setResult(decryptValue)
+      const decryptVal = decodeURIComponent(input)
+      setInputVal(input)
+      setOutputVal(decryptVal)
     }
   }
 
   return {
-    conversionValue,
-    inputText,
-    result,
-    resultCopied,
-    setConversionValue,
-    setInputText,
-    setResult,
-    setResultCopied,
+    conversionVal,
+    inputVal,
+    outputVal,
+    outputCopied,
+    setConversionVal,
+    setInputVal,
+    setOutputVal,
+    setOutputCopied,
     handleDropdownConversionChange,
-    handleInputTextChange,
+    handleInputChange,
   }
 }

@@ -1,7 +1,7 @@
 //- src/app/layout.tsx
 
 import type { Metadata } from "next";
-import { Roboto_Flex } from "next/font/google";
+import { Roboto_Flex, Roboto_Mono } from "next/font/google";
 import "./globals.css";
 import ReactQueryProvider from "./provider";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
@@ -11,6 +11,12 @@ import { AppFooter } from "@/components/core/app-layout"
 const fontSans = Roboto_Flex({
   variable: "--font-roboto-flex",
   subsets: ["latin"],
+})
+const fontMono = Roboto_Mono({
+  variable: "--font-roboto-mono",
+  subsets: ["latin"],
+  weight: "400",
+  style: "normal",
 })
 
 export const metadata: Metadata = {
@@ -25,7 +31,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${fontSans.variable} antialiased`}>
+      <body className={`${fontSans.variable} ${fontMono.variable} antialiased`}>
         <ReactQueryProvider>
           <SidebarProvider>
             <AppSidebar className="shadow-xs" />
