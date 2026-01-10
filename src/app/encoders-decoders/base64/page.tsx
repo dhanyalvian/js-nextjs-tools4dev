@@ -24,16 +24,16 @@ const breadcrumbItems = [
 
 const EncoderDecoderBase64Page = () => {
   const {
-    conversionValue,
-    encodingValue,
-    inputText,
-    result,
-    resultCopied,
-    setEncodingValue,
-    setResult,
-    setResultCopied,
+    conversionVal,
+    encodingVal,
+    inputVal,
+    outputVal,
+    outputCopied,
+    setOutputVal,
+    setOutputCopied,
     handleDropdownConversionChange,
-    handleInputTextChange,
+    handleDropdownEncodingChange,
+    handleInputChange,
   } = useBase64Store()
 
   return (
@@ -50,9 +50,13 @@ const EncoderDecoderBase64Page = () => {
                 { value: "encode", label: "Encode" },
                 { value: "decode", label: "Decode" },
               ]}
-              value={conversionValue}
+              value={conversionVal}
               defaultValue="encode"
-              onValueChange={handleDropdownConversionChange}
+              onValueChange={(value) => handleDropdownConversionChange(
+                value,
+                inputVal,
+                outputVal,
+              )}
             />
 
             <FormDropdown
@@ -62,28 +66,36 @@ const EncoderDecoderBase64Page = () => {
                 { value: "utf-8", label: "UTF-8" },
                 { value: "ascii", label: "ASCII" },
               ]}
-              value={encodingValue}
+              value={encodingVal}
               defaultValue="utf-8"
-              onValueChange={(val) => setEncodingValue(val as BufferEncoding)}
+              onValueChange={(value) => handleDropdownEncodingChange(
+                value as BufferEncoding,
+                conversionVal,
+                inputVal,
+              )}
             />
           </Form2Column>
 
           <FormInputTextarea
             id="input-text"
             label="Input"
-            value={inputText}
+            value={inputVal}
             isDisabled={false}
-            onValueChange={handleInputTextChange}
+            onValueChange={(value) => handleInputChange(
+              value,
+              conversionVal,
+              encodingVal,
+            )}
           />
 
           <Separator className="my-1" />
 
           <FormInputTextareaResult
             label="Output"
-            result={result}
-            setResult={setResult}
-            isCopied={resultCopied}
-            setIsCopied={setResultCopied}
+            result={outputVal}
+            setResult={setOutputVal}
+            isCopied={outputCopied}
+            setIsCopied={setOutputCopied}
           />
         </FormArea>
       </AppMain>
