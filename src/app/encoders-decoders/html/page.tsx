@@ -3,7 +3,12 @@
 "use client"
 
 import { AppHeader, AppMain } from "@/components/core/app-layout"
-import { FormArea, FormDropdown, FormInputTextarea, FormInputTextareaResult } from "@/components/page/form"
+import {
+  FormArea,
+  FormDropdown,
+  FormInputTextarea,
+  FormInputTextareaResult,
+} from "@/components/page/form"
 import { Separator } from "@/components/ui/separator"
 import { useHtmlStore } from "./handler"
 
@@ -19,13 +24,13 @@ const breadcrumbItems = [
 const EncoderDecoderHtmlPage = () => {
   const {
     conversionValue,
-    inputText,
-    result,
-    resultCopied,
-    setResult,
-    setResultCopied,
+    inputVal,
+    outputVal,
+    outputCopied,
+    setOutputVal,
+    setOutputCopied,
     handleDropdownConversionChange,
-    handleInputTextChange,
+    handleInputChange,
   } = useHtmlStore()
 
   return (
@@ -43,15 +48,19 @@ const EncoderDecoderHtmlPage = () => {
             ]}
             value={conversionValue}
             defaultValue="encode"
-            onValueChange={handleDropdownConversionChange}
+            onValueChange={(value) => handleDropdownConversionChange(
+              value,
+              inputVal,
+              outputVal,
+            )}
           />
 
           <FormInputTextarea
             id="input-text"
             label="Input"
-            value={inputText}
+            value={inputVal}
             isDisabled={false}
-            onValueChange={handleInputTextChange}
+            onValueChange={(value) => handleInputChange(value)}
             className="font-mono"
           />
 
@@ -59,10 +68,10 @@ const EncoderDecoderHtmlPage = () => {
 
           <FormInputTextareaResult
             label="Output"
-            result={result}
-            setResult={setResult}
-            isCopied={resultCopied}
-            setIsCopied={setResultCopied}
+            result={outputVal}
+            setResult={setOutputVal}
+            isCopied={outputCopied}
+            setIsCopied={setOutputCopied}
             className="font-mono"
           />
         </FormArea>

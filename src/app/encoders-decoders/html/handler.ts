@@ -5,38 +5,42 @@ import { encode, decode } from "html-entities"
 
 export const useHtmlStore = () => {
   const [conversionValue, setConversionValue] = useState<string>("encode")
-  const [inputText, setInputText] = useState<string>("")
-  const [result, setResult] = useState<string>("")
-  const [resultCopied, setResultCopied] = useState<boolean>(false)
+  const [inputVal, setInputVal] = useState<string>("")
+  const [outputVal, setOutputVal] = useState<string>("")
+  const [outputCopied, setOutputCopied] = useState<boolean>(false)
 
-  const handleDropdownConversionChange = (value: string) => {
+  const handleDropdownConversionChange = (
+    value: string,
+    input: string,
+    output: string,
+  ) => {
     setConversionValue(value)
-    setInputText("")
-    setResult("")
+    setInputVal(output)
+    setOutputVal(input)
   }
 
-  const handleInputTextChange = (value: string) => {
+  const handleInputChange = (value: string) => {
     if (conversionValue === "encode") {
       const encryptValue = encode(value)
-      setInputText(value)
-      setResult(encryptValue)
+      setInputVal(value)
+      setOutputVal(encryptValue)
     } else {
       const decryptValue = decode(value)
-      setInputText(value)
-      setResult(decryptValue)
+      setInputVal(value)
+      setOutputVal(decryptValue)
     }
   }
 
   return {
     conversionValue,
-    inputText,
-    result,
-    resultCopied,
+    inputVal,
+    outputVal,
+    outputCopied,
     setConversionValue,
-    setInputText,
-    setResult,
-    setResultCopied,
+    setInputVal,
+    setOutputVal,
+    setOutputCopied,
     handleDropdownConversionChange,
-    handleInputTextChange,
+    handleInputChange,
   }
 }
