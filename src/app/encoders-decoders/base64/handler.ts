@@ -4,42 +4,60 @@ import { Base64Decode, Base64Encode } from "@/lib/base64"
 import { useState } from "react"
 
 export const useBase64Store = () => {
-  const [conversionValue, setConversionValue] = useState<string>("encode")
-  const [encodingValue, setEncodingValue] = useState<BufferEncoding>("utf-8")
-  const [inputText, setInputText] = useState<string>("")
-  const [result, setResult] = useState<string>("")
-  const [resultCopied, setResultCopied] = useState<boolean>(false)
+  const [conversionVal, setConversionVal] = useState<string>("encode")
+  const [encodingVal, setEncodingVal] = useState<BufferEncoding>("utf-8")
+  const [inputVal, setInputVal] = useState<string>("")
+  const [outputVal, setOutputVal] = useState<string>("")
+  const [outputCopied, setOutputCopied] = useState<boolean>(false)
 
-  const handleDropdownConversionChange = (value: string) => {
-    setConversionValue(value)
-    setInputText("")
-    setResult("")
+  const handleDropdownConversionChange = (
+    conversion: string,
+    input: string,
+    output: string,
+  ) => {
+    setConversionVal(conversion)
+    setInputVal(output)
+    setOutputVal(input)
   }
 
-  const handleInputTextChange = (value: string) => {
-    if (conversionValue === "encode") {
-      const encryptValue = Base64Encode(value, encodingValue)
-      setInputText(value)
-      setResult(encryptValue)
+  const handleDropdownEncodingChange = (
+    encoding: BufferEncoding,
+    conversion: string,
+    input: string,
+  ) => {
+    setEncodingVal(encoding)
+    handleInputChange(input, conversion, encoding)
+  }
+
+  const handleInputChange = (
+    input: string,
+    conversion: string,
+    encoding: BufferEncoding,
+  ) => {
+    if (conversion === "encode") {
+      const encryptValue = Base64Encode(input, encoding)
+      setInputVal(input)
+      setOutputVal(encryptValue)
     } else {
-      const decryptValue = Base64Decode(value, encodingValue)
-      setInputText(value)
-      setResult(decryptValue)
+      const decryptValue = Base64Decode(input, encoding)
+      setInputVal(input)
+      setOutputVal(decryptValue)
     }
   }
 
   return {
-    conversionValue,
-    encodingValue,
-    inputText,
-    result,
-    resultCopied,
-    setConversionValue,
-    setEncodingValue,
-    setInputText,
-    setResult,
-    setResultCopied,
+    conversionVal,
+    encodingVal,
+    inputVal,
+    outputVal,
+    outputCopied,
+    setConversionVal,
+    setEncodingVal,
+    setInputVal,
+    setOutputVal,
+    setOutputCopied,
     handleDropdownConversionChange,
-    handleInputTextChange,
+    handleDropdownEncodingChange,
+    handleInputChange,
   }
 }
