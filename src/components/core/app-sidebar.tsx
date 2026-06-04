@@ -3,7 +3,8 @@
 "use client"
 
 import * as React from "react"
-import { CodeXml } from "lucide-react"
+import { HugeiconsIcon } from "@hugeicons/react"
+import { CodeXmlIcon } from "@hugeicons/core-free-icons"
 import {
   Sidebar,
   SidebarContent,
@@ -28,8 +29,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               asChild
               className="data-[slot=sidebar-menu-button]:p-1.5!"
             >
-              <Link href="/" aria-label="Dashboard">
-                <CodeXml className="size-5!" />
+              <Link href="/" aria-label="All Tools">
+              <HugeiconsIcon icon={CodeXmlIcon} strokeWidth={2} className="size-5.5!" />
                 <span className="text-base font-semibold mt-0.5">Tools4Dev</span>
               </Link>
             </SidebarMenuButton>
