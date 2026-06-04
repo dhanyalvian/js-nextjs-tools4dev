@@ -17,6 +17,11 @@ import {
   CalendarDays,
   Recycle,
   Ruler,
+  BlocksIcon,
+  BetweenHorizonalStartIcon,
+  GalleryVerticalIcon,
+  GalleryHorizontalEndIcon,
+  Columns3Icon,
 } from "lucide-react";
 
 export const dataNav = {
@@ -29,7 +34,7 @@ export const dataNav = {
     {
       title: "All Tools",
       url: "/",
-      icon: Home,
+      icon: Columns3Icon,
       demo: true,
     },
     {
@@ -82,6 +87,7 @@ export const dataNav = {
           title: "JWT",
           url: "/encoders-decoders/jwt",
           icon: Loader,
+          demo: true,
         },
       ],
     },
