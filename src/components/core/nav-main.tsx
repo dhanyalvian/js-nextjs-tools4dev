@@ -2,7 +2,6 @@
 
 "use client"
 
-import { ChevronRight, type LucideIcon } from "lucide-react"
 import {
   Collapsible,
   CollapsibleContent,
@@ -19,6 +18,8 @@ import {
 } from "@/components/ui/sidebar"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react"
+import { ChevronRightIcon } from "@hugeicons/core-free-icons"
 
 export function NavMain({
   menus,
@@ -26,13 +27,13 @@ export function NavMain({
   menus: {
     title: string,
     url: string,
-    icon?: LucideIcon,
-    demo?: boolean,
+    icon?: IconSvgElement,
+    soon?: boolean,
     submenus?: {
       title: string,
       url: string,
-      icon?: LucideIcon,
-      demo?: boolean,
+      icon?: IconSvgElement,
+      soon?: boolean,
     }[]
   }[]
 }) {
@@ -52,10 +53,17 @@ export function NavMain({
               >
                 <SidebarMenuItem>
                   <CollapsibleTrigger asChild>
-                    <SidebarMenuButton tooltip={menu.title} className={`${menu.demo ? "" : "text-neutral-400"}`}>
-                      {menu.icon && <menu.icon />}
+                    <SidebarMenuButton
+                      tooltip={menu.title}
+                      className={`${menu.soon ? "text-muted-foreground/70" : ""}`}
+                    >
+                      {menu.icon && <HugeiconsIcon icon={menu.icon} strokeWidth={2} />}
                       <span>{menu.title}</span>
-                      <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+                      <HugeiconsIcon
+                        icon={ChevronRightIcon}
+                        strokeWidth={2}
+                        className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90"
+                      />
                     </SidebarMenuButton>
                   </CollapsibleTrigger>
                   <CollapsibleContent className="overflow-hidden data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down">
@@ -64,17 +72,16 @@ export function NavMain({
                         <SidebarMenuSubItem key={submenu.title}>
                           <SidebarMenuSubButton
                             asChild
-                            className={`${submenu.demo ? "" : "text-neutral-400"}`}
                             isActive={pathname === submenu.url}
+                            className={`${submenu.soon ? "text-muted-foreground/70" : ""}`}
                           >
                             <Link href={submenu.url}>
-                              {submenu.icon && (
-                                submenu.demo || pathname === submenu.url ? (
-                                  <submenu.icon />
-                                ) : (
-                                  <submenu.icon color="#a1a1a1" />
-                                )
-                              )}
+                              {submenu.icon &&
+                                <HugeiconsIcon
+                                  icon={submenu.icon}
+                                  strokeWidth={2}
+                                />
+                              }
                               <span>{submenu.title}</span>
                             </Link>
                           </SidebarMenuSubButton>
@@ -90,10 +97,10 @@ export function NavMain({
                   asChild
                   tooltip={menu.title}
                   isActive={pathname === menu.url}
-                  className={`${menu.demo ? "" : "text-neutral-400"}`}
+                  className={`${menu.soon ? "text-muted-foreground/70" : ""}`}
                 >
                   <Link href={menu.url}>
-                    {menu.icon && <menu.icon />}
+                    {menu.icon && <HugeiconsIcon icon={menu.icon} strokeWidth={2} />}
                     <span>{menu.title}</span>
                   </Link>
                 </SidebarMenuButton>

@@ -3,7 +3,6 @@
 "use client"
 
 import * as React from "react"
-import { type LucideIcon } from "lucide-react"
 
 import {
   SidebarGroup,
@@ -14,6 +13,7 @@ import {
 } from "@/components/ui/sidebar"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react"
 
 export function NavSecondary({
   menus,
@@ -22,8 +22,8 @@ export function NavSecondary({
   menus: {
     title: string,
     url: string,
-    icon: LucideIcon,
-    demo?: boolean,
+    icon: IconSvgElement,
+    soon?: boolean,
   }[]
 } & React.ComponentPropsWithoutRef<typeof SidebarGroup>) {
   const pathname = usePathname();
@@ -37,10 +37,10 @@ export function NavSecondary({
               <SidebarMenuButton
                 asChild
                 isActive={pathname === menu.url}
-                className={`${menu.demo ? "" : "text-neutral-400"}`}
+                className={`${menu.soon ? "text-muted-foreground" : ""}`}
               >
                 <Link href={menu.url}>
-                  <menu.icon />
+                  <HugeiconsIcon icon={menu.icon} color="currentColor" strokeWidth={2} />
                   <span>{menu.title}</span>
                 </Link>
               </SidebarMenuButton>

@@ -1,10 +1,12 @@
-"use client";
+//- src/app/encoders-decoders/jwt/page.tsx
 
-import React, { useState, useEffect } from "react";
-import { decodeJWT, encodeJWT, useJwtStore } from "./handler";
-import { ShieldCheck, ShieldAlert } from "lucide-react";
+"use client"
+
+import React, { useState, useEffect } from "react"
+import { decodeJWT, encodeJWT, useJwtStore } from "./handler"
+// import { ShieldCheck, ShieldAlert } from "lucide-react"
 import { toast } from "sonner";
-import { AppHeader, AppMain } from "@/components/core/app-layout";
+import { AppHeader, AppMain } from "@/components/core/app-layout"
 import {
   Form1Column,
   Form2Column,
@@ -12,7 +14,10 @@ import {
   FormDropdown,
   FormInputTextarea,
   FormInputTextareaResult,
-} from "@/components/page/form";
+} from "@/components/page/form"
+import { HugeiconsIcon } from "@hugeicons/react"
+import { SecurityCheckIcon, SecurityWarningIcon } from "@hugeicons/core-free-icons"
+
 
 const breadcrumbItems = [
   {
@@ -119,13 +124,13 @@ export default function JWTTool() {
               <div className="mt-auto">
                 {isValid === true && (
                   <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/50 p-3 rounded-md shadow-xs border">
-                    <ShieldCheck className="w-5 h-5" />
+                    <HugeiconsIcon icon={SecurityCheckIcon} strokeWidth={2} className="size-5" />
                     <span className="font-medium">Signature Verified</span>
                   </div>
                 )}
                 {isValid === false && inputToken.length > 0 && (
                   <div className="flex items-center gap-2 text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-950/50 p-3 rounded-md shadow-xs border">
-                    <ShieldAlert className="w-5 h-5" />
+                    <HugeiconsIcon icon={SecurityWarningIcon} strokeWidth={2} className="size-5" />
                     <span className="font-medium">Invalid Signature or Format</span>
                     {errorMsg && <span className="text-sm opacity-80 ml-auto">{errorMsg}</span>}
                   </div>

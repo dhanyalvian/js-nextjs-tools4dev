@@ -21,7 +21,7 @@ const AppHeader = ({ breadcrumbItems }: AppHeaderProps) => {
   return (
     <header className="flex h-15 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-15 bg-main">
       <div className="flex items-center gap-2 px-4">
-        <SidebarTrigger className="-ml-1" />
+        <SidebarTrigger className="-ml-1 size-9" />
 
         <Separator
           orientation="vertical"
@@ -36,11 +36,11 @@ const AppHeader = ({ breadcrumbItems }: AppHeaderProps) => {
                 <React.Fragment key={index}>
                   <BreadcrumbItem className="hidden md:block">
                     {item.href ? (
-                      <BreadcrumbLink href={item.href} className="text-md font-semibold">
+                      <BreadcrumbLink href={item.href} className="text-lg font-semibold">
                         {item.label}
                       </BreadcrumbLink>
                     ) : (
-                      <BreadcrumbPage className="text-md font-semibold">{item.label}</BreadcrumbPage>
+                      <BreadcrumbPage className="text-lg font-semibold">{item.label}</BreadcrumbPage>
                     )}
                   </BreadcrumbItem>
 
