@@ -1,7 +1,7 @@
 //- src/app/layout.tsx
 
 import type { Metadata } from "next";
-import { Roboto_Flex, Roboto_Mono } from "next/font/google";
+import { Roboto_Flex, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import ReactQueryProvider from "./provider";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
@@ -9,14 +9,12 @@ import { AppSidebar } from "@/components/core/app-sidebar"
 import { AppFooter } from "@/components/core/app-layout"
 
 const fontSans = Roboto_Flex({
-  variable: "--font-roboto-flex",
+  variable: "--font-sans",
   subsets: ["latin"],
 })
-const fontMono = Roboto_Mono({
-  variable: "--font-roboto-mono",
+const fontMono = JetBrains_Mono({
+  variable: "--font-mono",
   subsets: ["latin"],
-  weight: "400",
-  style: "normal",
 })
 
 export const metadata: Metadata = {

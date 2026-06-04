@@ -17,9 +17,17 @@ export const FormArea = ({ children }: { children: React.ReactNode }) => {
   )
 }
 
+export const Form1Column = ({ children, className }: { children: React.ReactNode, className?: string }) => {
+  return (
+    <div className={cn("grid grid-cols-1 gap-4 items-stretch", className)}>
+      {children}
+    </div>
+  )
+}
+
 export const Form2Column = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="grid grid-cols-2 gap-4">
+    <div className="grid grid-cols-2 gap-4 items-stretch">
       {children}
     </div>
   )
@@ -149,12 +157,12 @@ export const FormInputTextarea = ({
   className,
 }: FormInputTextareaProps) => {
   return (
-    <div className="grid w-full gap-4 bg-background">
-      <InputGroup>
+    <div className="grid w-full gap-4 bg-background h-full">
+      <InputGroup className="h-full">
         <InputGroupTextarea
           id={id}
           value={value}
-          className={cn("text-muted-foreground", className)}
+          className={cn("text-muted-foreground h-full", className)}
           onChange={(e) => onValueChange(e.target.value)}
         />
 
@@ -280,12 +288,12 @@ export const FormInputTextareaResult = ({
   className,
 }: FormInputTextareaResultProps) => {
   return (
-    <div className="grid w-full gap-4 bg-background">
-      <InputGroup>
+    <div className="grid w-full gap-4 bg-background h-full">
+      <InputGroup className="h-full">
         <InputGroupTextarea
           id="input-text"
           value={result}
-          className={cn("text-muted-foreground", className)}
+          className={cn("text-muted-foreground h-full", className)}
           readOnly
         />
 
