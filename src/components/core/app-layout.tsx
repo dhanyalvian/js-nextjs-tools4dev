@@ -13,11 +13,25 @@ import { Separator } from "../ui/separator";
 import { SidebarTrigger } from "../ui/sidebar";
 import Link from "next/link";
 
+interface Item {
+  label: string,
+  href?: string,
+}
+
 interface AppHeaderProps {
-  breadcrumbItems?: { label: string; href?: string }[]
+  breadcrumbItems?: Item[],
 }
 
 const AppHeader = ({ breadcrumbItems }: AppHeaderProps) => {
+  const BreadcrumbItems: Item[] = [{
+    label: "Tools4Dev",
+    href: "/",
+  }]
+
+  if (breadcrumbItems) {
+    BreadcrumbItems.push(...breadcrumbItems)
+  }
+
   return (
     <header className="flex h-15 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-15 bg-main">
       <div className="flex items-center gap-2 px-4">
@@ -30,17 +44,23 @@ const AppHeader = ({ breadcrumbItems }: AppHeaderProps) => {
 
         <Breadcrumb>
           <BreadcrumbList>
-            {breadcrumbItems?.map((item, index) => {
-              const isLast = index === breadcrumbItems.length - 1
+            {BreadcrumbItems?.map((item, index) => {
+              const isLast = index === BreadcrumbItems.length - 1
+
               return (
                 <React.Fragment key={index}>
                   <BreadcrumbItem className="hidden md:block">
                     {item.href ? (
-                      <BreadcrumbLink href={item.href} className="text-lg font-semibold">
+                      <BreadcrumbLink
+                        href={item.href}
+                        className="text-md font-semibold text-foreground hover:underline"
+                      >
                         {item.label}
                       </BreadcrumbLink>
                     ) : (
-                      <BreadcrumbPage className="text-lg font-semibold">{item.label}</BreadcrumbPage>
+                      <BreadcrumbPage className="text-md font-semibold">
+                        {item.label}
+                      </BreadcrumbPage>
                     )}
                   </BreadcrumbItem>
 

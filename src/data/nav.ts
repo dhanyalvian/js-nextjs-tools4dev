@@ -1,5 +1,6 @@
 //- src/data/nav.ts
 
+import { nav } from "@/types/nav"
 import {
   SettingsIcon,
   LeftToRightListNumberIcon,
@@ -11,7 +12,7 @@ import {
   HashtagIcon,
   PasswordValidationIcon,
   GlobeLockIcon,
-  BarcodeIcon,
+  BarCode01Icon,
   ArrowDataTransferHorizontalIcon,
   Calendar1Icon,
   RepostIcon,
@@ -30,12 +31,7 @@ import {
   ViewIcon,
 } from "@hugeicons/core-free-icons"
 
-export const dataNav = {
-  user: {
-    name: "Dhany Noor Alfian",
-    email: "dhanyalvian@gmail.com",
-    avatar: "https://lh3.googleusercontent.com/a/ACg8ocJikhQikH8XnIA7RW9BrDglLF-6q_FafJW020U2sjC_rBDkjv96=s96-c",
-  },
+export const dataNav: nav = {
   navMain: [
     {
       title: "All Tools",
@@ -45,30 +41,35 @@ export const dataNav = {
     {
       title: "Converters",
       url: "#",
+      desc: "Transform data from one format or type to another.",
       icon: ArrowDataTransferHorizontalIcon,
       soon: true,
       submenus: [
         {
           title: "Number",
           url: "/converters/number",
+          desc: "Convert numbers between bases (e.g. decimal, binary, hex, octal).",
           icon: LeftToRightListNumberIcon,
           soon: true,
         },
         {
           title: "Unit",
           url: "/converters/unit",
+          desc: "Convert measurements between units (e.g. length, weight, temperature, speed).",
           icon: RulerIcon,
           soon: true,
         },
         {
           title: "Date",
           url: "/converters/date",
+          desc: "Convert dates between formats and calendars (e.g. DD/MM/YYYY, ISO 8601, Hijri)",
           icon: Calendar1Icon,
           soon: true,
         },
         {
           title: "Timestamp",
           url: "/converters/timestamp",
+          desc: "Convert Unix timestamp to human-readable date and vice versa",
           icon: Clock4Icon,
           soon: true,
         },
@@ -77,26 +78,31 @@ export const dataNav = {
     {
       title: "Encoders / Decoders",
       url: "#",
+      desc: "Encode or decode data using standard algorithms.",
       icon: RepostIcon,
       submenus: [
         {
           title: "HTML",
           url: "/encoders-decoders/html",
+          desc: "Encode special characters to HTML entities and decode them back.",
           icon: WebProgrammingIcon,
         },
         {
           title: "URL",
           url: "/encoders-decoders/url",
+          desc: "Encode or decode URL strings for safe transmission.",
           icon: Link01Icon,
         },
         {
           title: "Base64",
           url: "/encoders-decoders/base64",
+          desc: "Encode plain text or binary data to Base64 string and decode it back.",
           icon: DatabaseSyncIcon,
         },
         {
           title: "JWT",
           url: "/encoders-decoders/jwt",
+          desc: "Decode and inspect JWT token payload, header, and verify signature.",
           icon: SecurityCheckIcon,
         },
       ],
@@ -104,24 +110,28 @@ export const dataNav = {
     {
       title: "Formatters",
       url: "#",
+      desc: "Beautify or minify code and structured data.",
       icon: AiBeautifyIcon,
       soon: true,
       submenus: [
         {
           title: "JSON",
           url: "/formatters/json",
+          desc: "Beautify or minify JSON data with proper indentation and syntax highlighting.",
           icon: BracesIcon,
           soon: true,
         },
         {
           title: "SQL",
           url: "/formatters/sql",
+          desc: "Format and beautify SQL queries for better readability and structure.",
           icon: SqlIcon,
           soon: true,
         },
         {
           title: "XML",
           url: "/formatters/xml",
+          desc: "Beautify or minify XML data with proper indentation and tag formatting.",
           icon: SourceCodeSquareIcon,
           soon: true,
         },
@@ -130,64 +140,75 @@ export const dataNav = {
     {
       title: "Generators",
       url: "#",
+      desc: "Generate random or structured data.",
       icon: ServerStack01Icon,
       submenus: [
         {
           title: "Hash",
           url: "/generators/hash",
+          desc: "Generate hash from input text using various algorithms.",
           icon: HashtagIcon,
         },
         {
           title: "Password",
           url: "/generators/password",
+          desc: "Generate strong random passwords with custom length, symbols, and character sets.",
           icon: PasswordValidationIcon,
           soon: true,
         },
         {
           title: "UUID",
           url: "/generators/uuid",
+          desc: "Generate random UUID v1, v4, or v7 with bulk generation support.",
           icon: GlobeLockIcon,
         },
         {
           title: "Nano ID",
           url: "/generators/nanoid",
-          icon: BarcodeIcon,
+          desc: "Generate compact, URL-safe unique IDs with custom alphabet and length.",
+          icon: BarCode01Icon,
         },
       ],
     },
     {
       title: "Text",
       url: "#",
+      desc: "Manipulate and transform text.",
       icon: TextIcon,
       soon: true,
       submenus: [
         {
           title: "Escape / Unescape",
           url: "/text/escape-unescape",
+          desc: "Escape or unescape special characters for JSON, HTML, XML, and Unicode strings.",
           icon: InputLongTextIcon,
           soon: true,
         },
         {
           title: "Inspector / Case Converter",
           url: "/text/inspector-case-converter",
+          desc: "Analyze text statistics and convert between cases.",
           icon: TextSmallcapsIcon,
           soon: true,
         },
         {
           title: "Regex Tester",
           url: "/text/regex-tester",
+          desc: "Test and debug regular expressions against input text with match highlighting.",
           icon: RegexIcon,
           soon: true,
         },
         {
           title: "Text Compare",
           url: "/text/text-compare",
+          desc: "Compare two texts side by side and highlight differences line by line.",
           icon: MoreVerticalSquare02Icon,
           soon: true,
         },
         {
           title: "Markdown Preview",
           url: "/text/markdown-preview",
+          desc: "Write and preview Markdown with real-time rendered output.",
           icon: ViewIcon,
           soon: true,
         },
