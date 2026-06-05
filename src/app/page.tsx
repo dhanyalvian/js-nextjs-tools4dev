@@ -2,81 +2,117 @@
 
 import Link from "next/link"
 import { AppHeader, AppMain } from "@/components/core/app-layout"
-import { Card, CardHeader, CardTitle } from "@/components/ui/card"
 import { HugeiconsIcon } from "@hugeicons/react"
+import { ChevronRightIcon, HourglassIcon } from "@hugeicons/core-free-icons"
+import { navObj } from "@/types/nav"
+import { dataNav } from "@/data/nav"
+import { Separator } from "@/components/ui/separator"
 import {
-  BinaryIcon,
-  RulerIcon,
-  CalendarDaysIcon,
-  Link01Icon,
-  ArrowDownToLineIcon,
-  LoaderPinwheelIcon,
-  Key01Icon,
-  GlobeLockIcon,
-  BarcodeIcon,
-  FingerprintPatternIcon,
-  WebProgrammingIcon,
-} from "@hugeicons/core-free-icons"
+  Item,
+  ItemActions,
+  ItemContent,
+  ItemDescription,
+  ItemMedia,
+  ItemTitle,
+} from "@/components/ui/item"
 
 const breadcrumbItems = [
   {
-    label: "Tools for Developer",
+    label: "All Tools",
   },
 ]
 
-const toolsData = [
-  {
-    group: "Converters",
-    items: [
-      { title: "Number", href: "/converters/number", icon: BinaryIcon },
-      { title: "Unit", href: "/converters/unit", icon: RulerIcon },
-      { title: "Date", href: "/converters/date", icon: CalendarDaysIcon },
-    ],
-  },
-  {
-    group: "Encoders / Decoders",
-    items: [
-      { title: "HTML", href: "/encoders-decoders/html", icon: WebProgrammingIcon },
-      { title: "URL", href: "/encoders-decoders/url", icon: Link01Icon },
-      { title: "Base64", href: "/encoders-decoders/base64", icon: ArrowDownToLineIcon },
-      { title: "JWT", href: "/encoders-decoders/jwt", icon: LoaderPinwheelIcon },
-    ],
-  },
-  {
-    group: "Generators",
-    items: [
-      { title: "Hash", href: "/generators/hash", icon: FingerprintPatternIcon },
-      { title: "Password", href: "/generators/password", icon: Key01Icon },
-      { title: "UUID", href: "/generators/uuid", icon: GlobeLockIcon },
-      { title: "Nano ID", href: "/generators/nanoid", icon: BarcodeIcon },
-    ],
-  },
-]
+const Homepage = () => {
+  const navMain = dataNav.navMain
 
-export default function Home() {
   return (
     <>
       <AppHeader breadcrumbItems={breadcrumbItems} />
 
       <AppMain>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {toolsData.map((group) =>
-            group.items.map((item) => (
-              <Link key={item.href} href={item.href}>
-                <Card className="h-full transition-colors hover:bg-muted/50 cursor-pointer">
-                  <CardHeader className="flex flex-row items-center gap-4">
-                    <HugeiconsIcon icon={item.icon} strokeWidth={1.5} className="size-8 text-muted-foreground" />
-                    <div className="ml-2">
-                      <CardTitle className="text-lg">{item.title}</CardTitle>
-                      <p className="text-xs text-muted-foreground font-normal">{group.group}</p>
-                    </div>
-                  </CardHeader>
-                </Card>
-              </Link>
-            ))
-          )}
-        </div>
+        <HomepageCardGroup groups={navMain} />
       </AppMain>
     </>
   )
 }
+
+interface HomepageCardGroupProps {
+  groups: navObj[],
+}
+const HomepageCardGroup = ({ groups }: HomepageCardGroupProps) => {
+  return (
+    <>
+      {groups.map((group) => {
+        if (!group.submenus) {
+          return
+        }
+
+        return (
+          <div key={group.title} className="flex flex-col gap-0 mb-8">
+            <span className="font-medium">{group.title}</span>
+            <span className="text-sm text-muted-foreground">{group.desc}</span>
+            <Separator className="mt-2 mb-4" />
+            <HomepageCardItem items={group.submenus} />
+          </div>
+        )
+      })}
+    </>
+  )
+}
+
+interface HomepageCardItemProps {
+  items: navObj[],
+}
+const HomepageCardItem = ({ items }: HomepageCardItemProps) => {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      {items.map((item) => {
+        let itemVariant: "outline" | "muted" | "default" = "outline"
+        let itemUrl = item.url
+        let itemColor = "text-muted-foreground"
+
+        if (item.soon) {
+          itemVariant = "muted"
+          itemUrl = "#"
+          itemColor = "text-muted-foreground/50"
+        }
+
+        return (
+          <Item key={item.url} variant={itemVariant} size="sm" asChild>
+            <Link href={itemUrl} className="bg-card shadow-xs">
+              <ItemMedia>
+                <HugeiconsIcon
+                  icon={item.icon}
+                  strokeWidth={1.5}
+                  className={`size-8 ${itemColor}`}
+                />
+              </ItemMedia>
+              <ItemContent className="ml-1 gap-0.5 self-start">
+                <ItemTitle className={itemColor}>{item.title}</ItemTitle>
+                <ItemDescription className={`text-xs ${itemColor}`}>{item.desc}</ItemDescription>
+              </ItemContent>
+              <ItemActions className={`${item.soon && "self-start"}`}>
+                {!item.soon ? (
+                  <HugeiconsIcon
+                    icon={ChevronRightIcon}
+                    strokeWidth={2}
+                    className="size-4"
+                  />
+                ) : (
+                  <HugeiconsIcon
+                    icon={HourglassIcon}
+                    strokeWidth={2}
+                    className="size-4 text-muted-foreground/90"
+                  />
+                )}
+            </ItemActions>
+          </Link>
+          </Item>
+  )
+})}
+
+    </div >
+  )
+}
+
+export default Homepage
