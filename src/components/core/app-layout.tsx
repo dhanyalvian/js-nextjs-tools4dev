@@ -81,8 +81,8 @@ const AppMain = ({ children }: { children?: React.ReactNode }) => {
 
 const AppFooter = () => {
   return (
-    <footer className="min-h-8 pb-4 text-center text-xs bg-main text-gray-600">
-      © 2025 <Link href="https://github.com/dhanyalvian/js-nextjs-tools4dev" className="font-semibold hover:underline" target="blank">Tools4Dev</Link>. All rights reserved.
+    <footer className="min-h-8 pt-4 pb-4 text-center text-xs bg-main text-gray-600">
+      © {new Date().getFullYear()} <Link href="https://github.com/dhanyalvian/js-nextjs-tools4dev" className="font-semibold hover:underline" target="blank">Tools4Dev</Link>. All rights reserved.
     </footer>
   )
 }

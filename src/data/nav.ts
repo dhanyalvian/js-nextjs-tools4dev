@@ -154,7 +154,6 @@ export const dataNav: nav = {
           url: "/generators/password",
           desc: "Generate strong random passwords with custom length, symbols, and character sets.",
           icon: PasswordValidationIcon,
-          soon: true,
         },
         {
           title: "UUID",

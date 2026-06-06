@@ -5,7 +5,7 @@ import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
 
 import { HugeiconsIcon } from "@hugeicons/react"
-import { PanelLeftOpenIcon } from "@hugeicons/core-free-icons"
+import { PanelLeftDashedIcon } from "@hugeicons/core-free-icons"
 
 import { useIsMobile } from "@/hooks/use-mobile"
 import { cn } from "@/lib/utils"
@@ -275,7 +275,7 @@ function SidebarTrigger({
       }}
       {...props}
     >
-      <HugeiconsIcon icon={PanelLeftOpenIcon} strokeWidth={2} className="size-5!" />
+      <HugeiconsIcon icon={PanelLeftDashedIcon} strokeWidth={1.5} className="size-5!" />
       <span className="sr-only">Toggle Sidebar</span>
     </Button>
   )
