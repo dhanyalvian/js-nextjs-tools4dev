@@ -105,13 +105,12 @@ const HomepageCardItem = ({ items }: HomepageCardItemProps) => {
                     className="size-4 text-muted-foreground/90"
                   />
                 )}
-            </ItemActions>
-          </Link>
+              </ItemActions>
+            </Link>
           </Item>
-  )
-})}
-
-    </div >
+        )
+      })}
+    </div>
   )
 }
 
