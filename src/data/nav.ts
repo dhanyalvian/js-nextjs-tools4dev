@@ -119,7 +119,6 @@ export const dataNav: nav = {
           url: "/formatters/json",
           desc: "Beautify or minify JSON data with proper indentation and syntax highlighting.",
           icon: BracesIcon,
-          soon: true,
         },
         {
           title: "SQL",
