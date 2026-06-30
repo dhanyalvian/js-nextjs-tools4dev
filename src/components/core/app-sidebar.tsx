@@ -26,7 +26,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton className="data-[slot=sidebar-menu-button]:p-1.5!" asChild>
-              <Link href="/" aria-label="All Tools" className="text-sky-700">
+              <Link href="/" aria-label="All Tools" className="text-primary">
                 <HugeiconsIcon icon={CodeXmlIcon} strokeWidth={2} className="size-5.5!" />
                 <span className="text-base font-semibold mt-0.5">Tools4Dev</span>
               </Link>
