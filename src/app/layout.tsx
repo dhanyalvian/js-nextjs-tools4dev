@@ -7,6 +7,7 @@ import ReactQueryProvider from "./provider";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/core/app-sidebar"
 import { AppFooter } from "@/components/core/app-layout"
+import { BackToTop } from "@/components/core/back-to-top"
 
 const fontSans = Roboto_Flex({
   variable: "--font-sans",
@@ -39,6 +40,8 @@ export default function RootLayout({
 
               <AppFooter />
             </SidebarInset>
+
+            <BackToTop />
           </SidebarProvider>
         </ReactQueryProvider>
       </body>

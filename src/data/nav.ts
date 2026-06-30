@@ -112,7 +112,7 @@ export const dataNav: nav = {
       url: "#",
       desc: "Beautify or minify code and structured data.",
       icon: AiBeautifyIcon,
-      soon: true,
+      soon: false,
       submenus: [
         {
           title: "JSON",
