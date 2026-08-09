@@ -4,7 +4,6 @@ import React from "react";
 import {
   Breadcrumb,
   BreadcrumbItem,
-  BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator
@@ -51,12 +50,12 @@ const AppHeader = ({ breadcrumbItems }: AppHeaderProps) => {
                 <React.Fragment key={index}>
                   <BreadcrumbItem className="hidden md:block">
                     {item.href ? (
-                      <BreadcrumbLink
+                      <Link
                         href={item.href}
                         className="text-md font-semibold text-foreground hover:underline"
                       >
                         {item.label}
-                      </BreadcrumbLink>
+                      </Link>
                     ) : (
                       <BreadcrumbPage className="text-md font-semibold">
                         {item.label}

@@ -7,7 +7,9 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-sans);
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --font-mono:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
   --font-weight: 400;
   --font-style: normal;
   --color-sidebar-ring: var(--sidebar-ring);
@@ -74,7 +76,7 @@
   --chart-4: oklch(0.511 0.096 186.391);
   --chart-5: oklch(0.437 0.078 188.216);
   --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
+  --sidebar: oklch(1 0 0);
   --sidebar-foreground: oklch(0.145 0 0);
   --sidebar-primary: oklch(0.6 0.118 184.704);
   --sidebar-primary-foreground: oklch(0.984 0.014 180.72);
@@ -132,7 +134,7 @@ body {
   body {
     @apply bg-background text-foreground;
   }
-  
+
   button:not([disabled]),
   [role="button"]:not([disabled]) {
     cursor: pointer;
@@ -143,6 +145,11 @@ body {
   }
 
   .icon-frame {
-    @apply bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-xl;
+    @apply bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square
+      size-8 items-center justify-center rounded-xl;
+  }
+
+  .nav-icon {
+    @apply size-4.5!;
   }
 }
