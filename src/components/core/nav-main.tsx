@@ -21,9 +21,7 @@ import { usePathname } from "next/navigation"
 import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react"
 import { ChevronRightIcon } from "@hugeicons/core-free-icons"
 
-export function NavMain({
-  menus,
-}: {
+interface NavMainProps {
   menus: {
     title: string,
     url: string,
@@ -36,7 +34,9 @@ export function NavMain({
       soon?: boolean,
     }[]
   }[]
-}) {
+}
+
+export const NavMain = ({ menus }: NavMainProps) => {
   const pathname = usePathname()
 
   return (
@@ -49,7 +49,7 @@ export function NavMain({
                 key={menu.title}
                 asChild
                 className="group/collapsible"
-                defaultOpen={menu.submenus?.some((submenu) => submenu.url === pathname)}
+                defaultOpen={menu.submenus?.some((submenu) => submenu.url === pathname) || !menu.soon}
               >
                 <SidebarMenuItem>
                   <CollapsibleTrigger asChild>
@@ -57,7 +57,7 @@ export function NavMain({
                       tooltip={menu.title}
                       className={`${menu.soon ? "text-muted-foreground/70" : ""}`}
                     >
-                      {menu.icon && <HugeiconsIcon icon={menu.icon} strokeWidth={2} />}
+                      {menu.icon && <HugeiconsIcon icon={menu.icon} className="nav-icon" />}
                       <span>{menu.title}</span>
                       <HugeiconsIcon
                         icon={ChevronRightIcon}
@@ -79,7 +79,7 @@ export function NavMain({
                               {submenu.icon &&
                                 <HugeiconsIcon
                                   icon={submenu.icon}
-                                  strokeWidth={2}
+                                  className="nav-icon"
                                 />
                               }
                               <span>{submenu.title}</span>
