@@ -43,8 +43,19 @@ export const dataNav: nav = {
       url: "#",
       desc: "Transform data from one format or type to another.",
       icon: ArrowDataTransferHorizontalIcon,
-      soon: true,
       submenus: [
+        {
+          title: "JSON → YAML",
+          url: "/converters/json-yaml",
+          desc: "Convert JSON data to YAML format.",
+          icon: BracesIcon,
+        },
+        {
+          title: "JSON → XML",
+          url: "/converters/json-xml",
+          desc: "Convert JSON data to XML format.",
+          icon: SourceCodeSquareIcon,
+        },
         {
           title: "Number",
           url: "/converters/number",
