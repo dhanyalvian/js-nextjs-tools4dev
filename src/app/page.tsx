@@ -72,16 +72,22 @@ const HomepageCardItem = ({ items }: HomepageCardItemProps) => {
         let itemVariant: "outline" | "muted" | "default" = "outline"
         let itemUrl = item.url
         let itemColor = "text-muted-foreground"
+        let itemBgColor = "bg-card shadow-xs"
 
         if (item.soon) {
           itemVariant = "muted"
           itemUrl = "#"
           itemColor = "text-muted-foreground/50"
+          itemBgColor = "border border-border/50 shadow-none"
         }
 
         return (
-          <Item key={item.url} variant={itemVariant} size="sm" asChild>
-            <Link href={itemUrl} className="bg-card shadow-xs">
+          <Link key={item.url} href={itemUrl} className={`block h-full ${item.soon && "pointer-events-none"}`}>
+            <Item
+              variant={itemVariant}
+              size="sm"
+              className={`group/item h-full items-start ${itemBgColor} transition-all duration-300 ${!item.soon && "hover:shadow-lg hover:-translate-y-1"} ${itemColor}`}
+            >
               <ItemMedia>
                 <HugeiconsIcon
                   icon={item.icon}
@@ -89,17 +95,17 @@ const HomepageCardItem = ({ items }: HomepageCardItemProps) => {
                   className={`size-8 ${itemColor}`}
                 />
               </ItemMedia>
-              <ItemContent className="ml-1 gap-0.5 self-start">
+              <ItemContent className="ml-1 gap-0.5">
                 <ItemTitle className={itemColor}>{item.title}</ItemTitle>
                 <ItemDescription className={`text-xs ${itemColor}`}>{item.desc}</ItemDescription>
               </ItemContent>
-              <ItemActions className={`${item.soon && "self-start"}`}>
+              <ItemActions className="self-center">
                 {!item.soon ? (
-                  <HugeiconsIcon
-                    icon={ChevronRightIcon}
-                    strokeWidth={2}
-                    className="size-4"
-                  />
+                    <HugeiconsIcon
+                      icon={ChevronRightIcon}
+                      strokeWidth={2}
+                      className="size-4"
+                    />
                 ) : (
                   <HugeiconsIcon
                     icon={HourglassIcon}
@@ -108,8 +114,8 @@ const HomepageCardItem = ({ items }: HomepageCardItemProps) => {
                   />
                 )}
               </ItemActions>
-            </Link>
-          </Item>
+            </Item>
+          </Link>
         )
       })}
     </div>

@@ -2,10 +2,8 @@
 
 "use client"
 
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import { decodeJWT, encodeJWT, useJwtStore } from "./handler"
-// import { ShieldCheck, ShieldAlert } from "lucide-react"
-import { toast } from "sonner";
 import { AppHeader, AppMain } from "@/components/core/app-layout"
 import {
   Form1Column,
@@ -17,7 +15,6 @@ import {
 } from "@/components/page/form"
 import { HugeiconsIcon } from "@hugeicons/react"
 import { SecurityCheckIcon, SecurityWarningIcon } from "@hugeicons/core-free-icons"
-
 
 const breadcrumbItems = [
   {
@@ -56,8 +53,8 @@ export default function JWTTool() {
   useEffect(() => {
     const updateTokenData = async () => {
       if (!inputToken) {
-        setIsValid(null);
-        return;
+        setIsValid(null)
+        return
       }
       try {
         const indent = 4
@@ -77,31 +74,30 @@ export default function JWTTool() {
         setIsValid(false)
         setErrorMsg(e.message)
       }
-    };
+    }
 
-    updateTokenData();
+    updateTokenData()
   }, [inputToken, resultSecret, setResultHeader, setResultPayload])
 
-  // Update logic when manually encoding
-  const handleEncode = async () => {
-    try {
-      const parsedHeader = JSON.parse(resultHeader)
-      const parsedPayload = JSON.parse(resultPayload)
-      const newToken = await encodeJWT(parsedHeader, parsedPayload, resultSecret)
-      setInputToken(newToken)
-      setErrorMsg("")
-      setIsValid(true)
-      toast.success("JWT Encoded successfully!")
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (e: any) {
-      setErrorMsg(e.message)
-      toast.error("Failed to encode: " + e.message)
-    }
-  }
-
   // Generate an initial token when mounted
+  const initialized = useRef(false)
   useEffect(() => {
-    handleEncode()
+    if (initialized.current) return
+    initialized.current = true
+
+    const generateInitialToken = async () => {
+      try {
+        const parsedHeader = JSON.parse(resultHeader)
+        const parsedPayload = JSON.parse(resultPayload)
+        const newToken = await encodeJWT(parsedHeader, parsedPayload, resultSecret)
+        setInputToken(newToken)
+        setIsValid(true)
+      } catch {
+        // Ignore errors during initialization
+      }
+    }
+    generateInitialToken()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
@@ -197,5 +193,5 @@ export default function JWTTool() {
         </FormArea>
       </AppMain>
     </>
-  );
+  )
 }

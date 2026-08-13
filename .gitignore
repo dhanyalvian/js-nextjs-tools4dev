@@ -42,3 +42,4 @@ next-env.d.ts
 
 *.code-workspace
 bun.lock
+opencode.json
