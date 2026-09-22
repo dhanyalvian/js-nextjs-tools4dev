@@ -119,13 +119,13 @@ export default function JWTTool() {
 
               <div className="mt-auto">
                 {isValid === true && (
-                  <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/50 p-3 rounded-md shadow-xs border">
+                  <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/50 p-3 rounded-lg shadow-xs border">
                     <HugeiconsIcon icon={SecurityCheckIcon} strokeWidth={2} className="size-5" />
                     <span className="font-medium">Signature Verified</span>
                   </div>
                 )}
                 {isValid === false && inputToken.length > 0 && (
-                  <div className="flex items-center gap-2 text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-950/50 p-3 rounded-md shadow-xs border">
+                  <div className="flex items-center gap-2 text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-950/50 p-3 rounded-lg shadow-xs border">
                     <HugeiconsIcon icon={SecurityWarningIcon} strokeWidth={2} className="size-5" />
                     <span className="font-medium">Invalid Signature or Format</span>
                     {errorMsg && <span className="text-sm opacity-80 ml-auto">{errorMsg}</span>}

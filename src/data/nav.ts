@@ -32,31 +32,45 @@ import {
 } from "@hugeicons/core-free-icons"
 
 export const dataNav: nav = {
+  navHome: [
+    {
+      id: "1",
+      title: "",
+      url: "#",
+      submenus: [
+        {
+          id: "1.1",
+          title: "All Tools",
+          url: "/",
+          icon: MenuSquareIcon,
+        },
+      ],
+    },
+  ],
   navMain: [
     {
-      title: "All Tools",
-      url: "/",
-      icon: MenuSquareIcon,
-    },
-    {
+      id: "2",
       title: "Converters",
       url: "#",
       desc: "Transform data from one format or type to another.",
       icon: ArrowDataTransferHorizontalIcon,
       submenus: [
         {
+          id: "2.1",
           title: "JSON → YAML",
           url: "/converters/json-yaml",
           desc: "Convert JSON data to YAML format.",
           icon: BracesIcon,
         },
         {
+          id: "2.2",
           title: "JSON → XML",
           url: "/converters/json-xml",
           desc: "Convert JSON data to XML format.",
           icon: SourceCodeSquareIcon,
         },
         {
+          id: "2.3",
           title: "Number",
           url: "/converters/number",
           desc: "Convert numbers between bases (e.g. decimal, binary, hex, octal).",
@@ -64,6 +78,7 @@ export const dataNav: nav = {
           soon: true,
         },
         {
+          id: "2.4",
           title: "Unit",
           url: "/converters/unit",
           desc: "Convert measurements between units (e.g. length, weight, temperature, speed).",
@@ -71,6 +86,7 @@ export const dataNav: nav = {
           soon: true,
         },
         {
+          id: "2.5",
           title: "Date",
           url: "/converters/date",
           desc: "Convert dates between formats and calendars (e.g. DD/MM/YYYY, ISO 8601, Hijri)",
@@ -78,6 +94,7 @@ export const dataNav: nav = {
           soon: true,
         },
         {
+          id: "2.6",
           title: "Timestamp",
           url: "/converters/timestamp",
           desc: "Convert Unix timestamp to human-readable date and vice versa",
@@ -87,30 +104,35 @@ export const dataNav: nav = {
       ],
     },
     {
+      id: "3",
       title: "Encoders / Decoders",
       url: "#",
       desc: "Encode or decode data using standard algorithms.",
       icon: RepostIcon,
       submenus: [
         {
+          id: "3.1",
           title: "HTML",
           url: "/encoders-decoders/html",
           desc: "Encode special characters to HTML entities and decode them back.",
           icon: WebProgrammingIcon,
         },
         {
+          id: "3.2",
           title: "URL",
           url: "/encoders-decoders/url",
           desc: "Encode or decode URL strings for safe transmission.",
           icon: Link01Icon,
         },
         {
+          id: "3.3",
           title: "Base64",
           url: "/encoders-decoders/base64",
           desc: "Encode plain text or binary data to Base64 string and decode it back.",
           icon: DatabaseSyncIcon,
         },
         {
+          id: "3.4",
           title: "JWT",
           url: "/encoders-decoders/jwt",
           desc: "Decode and inspect JWT token payload, header, and verify signature.",
@@ -119,6 +141,7 @@ export const dataNav: nav = {
       ],
     },
     {
+      id: "4",
       title: "Formatters",
       url: "#",
       desc: "Beautify or minify code and structured data.",
@@ -126,12 +149,14 @@ export const dataNav: nav = {
       soon: false,
       submenus: [
         {
+          id: "4.1",
           title: "JSON",
           url: "/formatters/json",
           desc: "Beautify or minify JSON data with proper indentation and syntax highlighting.",
           icon: BracesIcon,
         },
         {
+          id: "4.2",
           title: "SQL",
           url: "/formatters/sql",
           desc: "Format and beautify SQL queries for better readability and structure.",
@@ -139,6 +164,7 @@ export const dataNav: nav = {
           soon: true,
         },
         {
+          id: "4.3",
           title: "XML",
           url: "/formatters/xml",
           desc: "Beautify or minify XML data with proper indentation and tag formatting.",
@@ -148,30 +174,35 @@ export const dataNav: nav = {
       ],
     },
     {
+      id: "5",
       title: "Generators",
       url: "#",
       desc: "Generate random or structured data.",
       icon: ServerStack01Icon,
       submenus: [
         {
+          id: "5.1",
           title: "Hash",
           url: "/generators/hash",
           desc: "Generate hash from input text using various algorithms.",
           icon: HashtagIcon,
         },
         {
+          id: "5.2",
           title: "Password",
           url: "/generators/password",
           desc: "Generate strong random passwords with custom length, symbols, and character sets.",
           icon: PasswordValidationIcon,
         },
         {
+          id: "5.3",
           title: "UUID",
           url: "/generators/uuid",
           desc: "Generate random UUID v1, v4, or v7 with bulk generation support.",
           icon: GlobeLockIcon,
         },
         {
+          id: "5.4",
           title: "Nano ID",
           url: "/generators/nanoid",
           desc: "Generate compact, URL-safe unique IDs with custom alphabet and length.",
@@ -180,6 +211,7 @@ export const dataNav: nav = {
       ],
     },
     {
+      id: "6",
       title: "Text",
       url: "#",
       desc: "Manipulate and transform text.",
@@ -187,6 +219,7 @@ export const dataNav: nav = {
       soon: true,
       submenus: [
         {
+          id: "6.1",
           title: "Escape / Unescape",
           url: "/text/escape-unescape",
           desc: "Escape or unescape special characters for JSON, HTML, XML, and Unicode strings.",
@@ -194,6 +227,7 @@ export const dataNav: nav = {
           soon: true,
         },
         {
+          id: "6.2",
           title: "Inspector / Case Converter",
           url: "/text/inspector-case-converter",
           desc: "Analyze text statistics and convert between cases.",
@@ -201,6 +235,7 @@ export const dataNav: nav = {
           soon: true,
         },
         {
+          id: "6.3",
           title: "Regex Tester",
           url: "/text/regex-tester",
           desc: "Test and debug regular expressions against input text with match highlighting.",
@@ -208,6 +243,7 @@ export const dataNav: nav = {
           soon: true,
         },
         {
+          id: "6.4",
           title: "Text Compare",
           url: "/text/text-compare",
           desc: "Compare two texts side by side and highlight differences line by line.",
@@ -215,6 +251,7 @@ export const dataNav: nav = {
           soon: true,
         },
         {
+          id: "6.5",
           title: "Markdown Preview",
           url: "/text/markdown-preview",
           desc: "Write and preview Markdown with real-time rendered output.",
@@ -224,10 +261,20 @@ export const dataNav: nav = {
       ],
     },
     {
-      title: "Settings",
-      url: "/settings",
+      id: "7",
+      title: "",
+      url: "#",
       icon: SettingsIcon,
       soon: true,
+      submenus: [
+        {
+          id: "7.1",
+          title: "Settings",
+          url: "/settings",
+          icon: SettingsIcon,
+          soon: true,
+        }
+      ],
     },
   ],
   navSecondary: [],

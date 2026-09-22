@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/collapsible"
 import {
   SidebarGroup,
+  SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
@@ -18,22 +19,13 @@ import {
 } from "@/components/ui/sidebar"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react"
+import { HugeiconsIcon } from "@hugeicons/react"
 import { ChevronRightIcon } from "@hugeicons/core-free-icons"
+import { navObj } from "@/types/nav"
+import { cn } from "@/lib/utils"
 
 interface NavMainProps {
-  menus: {
-    title: string,
-    url: string,
-    icon?: IconSvgElement,
-    soon?: boolean,
-    submenus?: {
-      title: string,
-      url: string,
-      icon?: IconSvgElement,
-      soon?: boolean,
-    }[]
-  }[]
+  menus: navObj[],
 }
 
 export const NavMain = ({ menus }: NavMainProps) => {
@@ -41,7 +33,7 @@ export const NavMain = ({ menus }: NavMainProps) => {
 
   return (
     <SidebarGroup>
-      <SidebarMenu>
+      <SidebarMenu className="gap-0.5">
         {menus.map((menu) => {
           return (
             (menu.submenus && menu.submenus.length > 0) ? (
@@ -67,7 +59,7 @@ export const NavMain = ({ menus }: NavMainProps) => {
                     </SidebarMenuButton>
                   </CollapsibleTrigger>
                   <CollapsibleContent className="overflow-hidden data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down">
-                    <SidebarMenuSub>
+                    <SidebarMenuSub className="gap-0.5">
                       {menu.submenus?.map((submenu) => (
                         <SidebarMenuSubItem key={submenu.title}>
                           <SidebarMenuSubButton
@@ -106,6 +98,69 @@ export const NavMain = ({ menus }: NavMainProps) => {
                 </SidebarMenuButton>
               </SidebarMenuItem>
             )
+          )
+        })}
+      </SidebarMenu>
+    </SidebarGroup>
+  )
+}
+
+export const NavMainNew = ({ menus }: NavMainProps) => {
+  const pathname = usePathname()
+
+  return (
+    <SidebarGroup className="py-0 px-1.5">
+      <SidebarMenu>
+        {menus.map((menu) => {
+          if (menu.soon) {
+            return
+          }
+
+          return (
+            <div key={menu.id} className="mb-4">
+              {menu.title && (
+                <SidebarGroupLabel
+                  className={cn(
+                    "h-auto py-0 pb-1",
+                    "uppercase text-xs-min text-sidebar-header-title font-semibold",
+                  )}
+                >
+                  {menu.title}
+                </SidebarGroupLabel>
+              )}
+
+              <SidebarMenu className="gap-0.5">
+                {menu.submenus?.map((submenu) => {
+                  if (submenu.soon) {
+                    return
+                  }
+
+                  return (
+                    <SidebarMenuItem key={submenu.title} data-active={true} className="m-0">
+                      <SidebarMenuButton
+                        asChild
+                        tooltip={submenu.title}
+                        isActive={pathname === submenu.url}
+                        className={`font-[450] rounded-sm overflow-visible`}
+                      >
+                        <Link href={submenu.url}>
+                          {submenu.icon && (
+                            <HugeiconsIcon
+                              icon={submenu.icon}
+                              strokeWidth={1.5}
+                              className="nav-icon text-sidebar-icon"
+                            />
+                          )}
+                          <span className="text-xs-plus font-medium">
+                            {submenu.title}
+                          </span>
+                        </Link>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  )
+                })}
+              </SidebarMenu>
+            </div>
           )
         })}
       </SidebarMenu>
