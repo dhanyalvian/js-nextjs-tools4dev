@@ -14,6 +14,7 @@ import {
   FormInputTextResult,
   FormSwitch,
 } from "@/components/page/form"
+import { ZapIcon } from "@hugeicons/core-free-icons"
 
 const breadcrumbItems = [
   {
@@ -54,17 +55,17 @@ const GeneratorNanoIdPage = () => {
           <FormArea>
             <Form2Column>
               <FormSwitch
-                id="inc-number"
-                label="Include Numbers"
-                checked={isIncNumber}
-                onCheckedChange={handleIncNumberChange}
-              />
-
-              <FormSwitch
                 id="inc-symbol"
                 label="Include Symbols"
                 checked={isIncSymbol}
                 onCheckedChange={handleIncSymbolChange}
+              />
+
+              <FormSwitch
+                id="inc-number"
+                label="Include Numbers"
+                checked={isIncNumber}
+                onCheckedChange={handleIncNumberChange}
               />
 
               <FormSwitch
@@ -112,6 +113,7 @@ const GeneratorNanoIdPage = () => {
             <FormInputSubmit
               id="submit"
               label="Generate"
+              icon={ZapIcon}
               disabled={isGenerate || seedValue.number + seedValue.symbol + seedValue.uppercase + seedValue.lowercase === ""}
             />
 

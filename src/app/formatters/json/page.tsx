@@ -57,7 +57,7 @@ const LineNumbersTextarea = ({
 
   return (
     <div className="grid w-full gap-4 bg-background h-full">
-      <InputGroup className="w-full h-full">
+      <InputGroup className="w-full h-full rounded-lg">
         <InputGroupAddon align="block-start">
           <Label htmlFor={id} className="text-foreground">
             {label}

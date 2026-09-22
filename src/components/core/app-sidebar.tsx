@@ -14,8 +14,7 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar"
-import { NavMain } from "@/components/core/nav-main"
-import { NavSecondary } from "@/components/core/nav-secondary"
+import { NavMainNew } from "@/components/core/nav-main"
 import { dataNav } from "@/data/nav"
 import Link from "next/link"
 
@@ -26,7 +25,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton className="data-[slot=sidebar-menu-button]:p-1.5!" asChild>
-              <Link href="/" aria-label="All Tools" className="text-primary">
+              <Link href="/" aria-label="All Tools">
                 <HugeiconsIcon icon={CodeXmlIcon} strokeWidth={2} className="size-5.5!" />
                 <span className="text-base text-foreground font-semibold mt-0.5">Tools4Dev</span>
               </Link>
@@ -35,9 +34,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarMenu>
       </SidebarHeader>
 
-      <SidebarContent>
-        <NavMain menus={dataNav.navMain} />
-        <NavSecondary menus={dataNav.navSecondary} className="mt-auto" />
+      <SidebarContent className="gap-2 mt-2">
+        <NavMainNew menus={dataNav.navHome} />
+        <NavMainNew menus={dataNav.navMain} />
+        {/* <NavSecondary menus={dataNav.navSecondary} className="mt-auto" /> */}
       </SidebarContent>
       <SidebarRail />
     </Sidebar>

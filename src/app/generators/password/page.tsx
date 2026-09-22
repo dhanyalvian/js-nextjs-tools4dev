@@ -152,7 +152,7 @@ const GeneratorPasswordPage = () => {
               disabled={isGenerate || !isValid}
             />
 
-            <div className="bg-background border px-3 py-4 rounded-md shadow-xs">
+            <div className="bg-background border px-3 py-4 rounded-lg shadow-xs">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-sm text-foreground">Password Strength</span>
                 <span className={cn("text-sm font-medium", strengthInfo.color)}>

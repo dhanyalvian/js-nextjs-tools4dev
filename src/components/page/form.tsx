@@ -8,6 +8,7 @@ import { Label } from "../ui/label"
 import { Switch } from "../ui/switch"
 import { NativeSelect, NativeSelectOption } from "../ui/native-select"
 import { cn } from "@/lib/utils"
+import { HugeiconsIcon, IconSvgElement } from "@hugeicons/react"
 
 export const FormArea = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -47,7 +48,7 @@ export const FormSwitch = ({
 }: FormSwitchProps) => {
   return (
     <div className="bg-background w-full">
-      <InputGroup className="px-3 py-6 flex justify-between items-center gap-2">
+      <InputGroup className="px-3 py-6 flex justify-between items-center gap-2 rounded-lg">
         <Label htmlFor={id} className="text-foreground">
           {label}
         </Label>
@@ -79,7 +80,7 @@ export const FormDropdown = ({
 }: FormDropdownProps) => {
   return (
     <div className="bg-background w-full">
-      <InputGroup className="px-3 py-6 flex justify-between items-center gap-2">
+      <InputGroup className="px-3 py-6 flex justify-between items-center gap-2 rounded-lg">
         <Label htmlFor={id} className="text-foreground">
           {label}
         </Label>
@@ -120,7 +121,7 @@ export const FormInputNumber = ({
 }: FormInputNumberProps) => {
   return (
     <div className="bg-background w-full">
-      <InputGroup className="px-3 py-6 flex justify-between items-center gap-2">
+      <InputGroup className="px-3 py-6 flex justify-between items-center gap-2 rounded-lg">
         <Label htmlFor={id} className="text-foreground">
           {label}
         </Label>
@@ -158,7 +159,7 @@ export const FormInputTextarea = ({
 }: FormInputTextareaProps) => {
   return (
     <div className="grid w-full gap-4 bg-background h-full">
-      <InputGroup className="h-full">
+      <InputGroup className="h-full rounded-lg">
         <InputGroupTextarea
           id={id}
           value={value}
@@ -192,20 +193,22 @@ export const FormInputTextarea = ({
 interface FormInputSubmitProps {
   id: string,
   label: string,
+  icon?: IconSvgElement,
   disabled: boolean,
 }
-export const FormInputSubmit = ({ id, label, disabled }: FormInputSubmitProps) => {
+export const FormInputSubmit = ({ id, label, icon, disabled }: FormInputSubmitProps) => {
   return (
     <div>
       <Button
         id={id}
         variant="default"
         size="default"
-        className="rounded-md shadow-xs"
+        className="pr-2 rounded-full shadow-xs"
         disabled={disabled}
         type="submit"
       >
-        {label}
+        {icon && <HugeiconsIcon icon={icon} strokeWidth={2} />}
+        {label}&nbsp;
       </Button>
     </div>
   )
@@ -231,7 +234,7 @@ export const FormInputTextResult = ({
 }: FormInputTextResultProps) => {
   return (
     <div className="grid w-full gap-4 bg-background">
-      <InputGroup>
+      <InputGroup className="rounded-lg">
         <InputGroupInput
           id={id}
           value={value}
@@ -289,7 +292,7 @@ export const FormInputTextareaResult = ({
 }: FormInputTextareaResultProps) => {
   return (
     <div className="grid w-full gap-4 bg-background h-full">
-      <InputGroup className="h-full">
+      <InputGroup className="h-full rounded-lg">
         <InputGroupTextarea
           id="input-text"
           value={result}
@@ -345,7 +348,7 @@ export const FormInputTextareaResultArr = ({
 }: FormInputTextareaResultArrProps) => {
   return (
     <div className="grid w-full gap-4 bg-background">
-      <InputGroup>
+      <InputGroup className="rounded-lg">
         <InputGroupTextarea
           id="input-text"
           value={result.join("\n")}
