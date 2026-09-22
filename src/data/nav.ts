@@ -260,6 +260,8 @@ export const dataNav: nav = {
         },
       ],
     },
+  ],
+  navSecondary: [
     {
       id: "7",
       title: "",
@@ -277,5 +279,4 @@ export const dataNav: nav = {
       ],
     },
   ],
-  navSecondary: [],
 }
